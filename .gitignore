@@ -1,0 +1,5 @@
+# comment
+__pycache__/
+venv/
+.idea/
+docs/*.txt

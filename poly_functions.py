@@ -54,3 +54,10 @@ def add(a, b):
         ans[ind] = np.polyadd(ans[ind], b[i])
         ind -= 1
     return ans
+
+
+def make_equlation(a, b, c, d):
+    x = [np.poly1d([1]), np.poly1d([0])]
+    y = [np.poly1d([1, 0])]
+    minus_one = [np.poly1d([-1])]
+    return eval('mult(x, (add(mult(a, b), mult(mult(add(y, minus_one), c),d))))')
