@@ -3,7 +3,6 @@ import numpy as np
 
 def show_y(arr):
     step_y = len(arr)
-
     ans = "("
     for j in range(len(arr), 0, -1):
         if arr[j] != 0:
