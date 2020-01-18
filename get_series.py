@@ -31,10 +31,29 @@ def equations_to_series(equations: list, n: int):
     a = new_a
     f = add(x, a)
     cut_f = f[(-2 * i - 4):]
-    print(show(cut_f), end='\n\n')
+    return show(cut_f)
 
 
 if __name__ == '__main__':
+    import time
+    start = time.time()
     groups = parser()
+    # series = set()
+    series = []
+
+
     for group in groups:
-        equations_to_series(group[1:], 7)
+        length = len(series)
+        current = equations_to_series(group[1:], 9)
+        is_uniq = True
+        for el in series:
+            if el[1] == current:
+                is_uniq = False
+                print('>>>>>>>>>>>>>>>')
+                print(el[0])
+                print(group[0])
+                print(current)
+                print()
+        if is_uniq:
+            series.append((group[0], current))
+print('ALL TIME:', time.time() - start)
