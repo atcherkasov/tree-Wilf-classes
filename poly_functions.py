@@ -56,13 +56,20 @@ def add(a, b):
     return ans
 
 
-def make_equlation(a, b, c, d):
+def make_equlation(a, b, c, d, xy_equation=True):
     x = [np.poly1d([1]), np.poly1d([0])]
     y = [np.poly1d([1, 0])]
     minus_one = [np.poly1d([-1])]
-    return mult(x,
-                add(mult(a, b),
-                    mult(mult(add(y, minus_one),
-                              c),
-                         d)))
+    if (xy_equation):
+        return mult(x,
+                    add(mult(a, b),
+                        mult(mult(add(y, minus_one),
+                                  c),
+                             d)))
+    else:
+        return mult(x,
+                    add(mult(a, b),
+                        mult(mult(minus_one,
+                                  c),
+                             d)))
     # return eval('mult(x, (add(mult(a, b), mult(mult(add(y, minus_one), c),d))))')

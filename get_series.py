@@ -3,7 +3,7 @@ from poly_functions import add, make_equlation, show
 from parsers import parser
 
 
-def equations_to_series(equations: list, n: int):
+def equations_to_series(equations: list, n: int, xy_equation=True):
     x = [np.poly1d([1]), np.poly1d([0])]
 
     variable = {}
@@ -19,7 +19,8 @@ def equations_to_series(equations: list, n: int):
             new_variable[j] = make_equlation(variable[equations[j - 1][1]],
                                              variable[equations[j - 1][2]],
                                              variable[equations[j - 1][3]],
-                                             variable[equations[j - 1][4]])
+                                             variable[equations[j - 1][4]],
+                                             xy_equation)
         for j in range(1, len(variable)):
             variable[j] = new_variable[j]
 
@@ -27,7 +28,8 @@ def equations_to_series(equations: list, n: int):
         variable[0] = f
 
     new_a = make_equlation(variable[equations[0][1]], variable[equations[0][2]],
-                           variable[equations[0][3]], variable[equations[0][4]])
+                           variable[equations[0][3]], variable[equations[0][4]],
+                           xy_equation)
     a = new_a
     f = add(x, a)
     cut_f = f[(-2 * i - 4):]
@@ -38,22 +40,15 @@ if __name__ == '__main__':
     import time
     start = time.time()
     groups = parser()
-    # series = set()
-    series = []
 
-
-    for group in groups:
-        length = len(series)
-        current = equations_to_series(group[1:], 9)
-        is_uniq = True
-        for el in series:
-            if el[1] == current:
-                is_uniq = False
-                print('>>>>>>>>>>>>>>>')
-                print(el[0])
-                print(group[0])
-                print(current)
-                print()
-        if is_uniq:
-            series.append((group[0], current))
+    file = open('../series.txt', 'w')
+    size = len(groups)
+    for i in range(size):
+        seriesXY = equations_to_series(groups[i][1:], 8)
+        seriesX = equations_to_series(groups[i][1:], 7, False)
+        print(groups[i][0][:-1], file=file)
+        print(seriesXY, file=file)
+        print(seriesX + '\n', file=file)
+        print(int(i / float(size) * 100), '%')
+    file.close()
 print('ALL TIME:', time.time() - start)
