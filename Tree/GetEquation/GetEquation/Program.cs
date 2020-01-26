@@ -52,7 +52,7 @@ namespace GetEquation
                 Counting = new Tree[0];
             }
 
-            using (StreamWriter fs = new StreamWriter("../../../../../equations.txt", false, System.Text.Encoding.Default))
+            using (StreamWriter fs = new StreamWriter("../../../../../../equations.txt", false, System.Text.Encoding.Default))
             {
 
                 Console.WriteLine(AlreadyCounted.Length);

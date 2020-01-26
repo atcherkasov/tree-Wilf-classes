@@ -10,3 +10,9 @@ C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\Tree\GetEquation\GetEq
 C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\Tree\GetEquation\GetEquation\obj\Debug\GetEquation.csprojAssemblyReference.cache
 C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\Tree\GetEquation\GetEquation\obj\Debug\GetEquation.exe
 C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\Tree\GetEquation\GetEquation\obj\Debug\GetEquation.pdb
+C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\BigOne\Tree\GetEquation\GetEquation\bin\Debug\GetEquation.exe.config
+C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\BigOne\Tree\GetEquation\GetEquation\bin\Debug\GetEquation.exe
+C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\BigOne\Tree\GetEquation\GetEquation\bin\Debug\GetEquation.pdb
+C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\BigOne\Tree\GetEquation\GetEquation\obj\Debug\GetEquation.csprojAssemblyReference.cache
+C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\BigOne\Tree\GetEquation\GetEquation\obj\Debug\GetEquation.exe
+C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\BigOne\Tree\GetEquation\GetEquation\obj\Debug\GetEquation.pdb

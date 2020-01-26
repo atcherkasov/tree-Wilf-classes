@@ -217,7 +217,7 @@ namespace GetEquation
         //    //"a10", "b10", "c10", "d10", "e10", "f10", "g10", "h10", "i10", "j10", "k10", "l10", "m10", "n10", "o10", "p10", "q10", "r10", "s10", "t10", "u10", "v10", "w10", "z10"
         //};
 
-        public static string[] XYVarialables = new string[0];
+        public static string[] XYVarialables = new string[2000];
         //{
         //        "0",  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "q1", "r1", "s1", "t1", "u1", "v1", "w1", "z1",
         //        "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2", "i2", "j2", "k2", "l2", "m2", "n2", "o2", "p2", "q2", "r2", "s2", "t2", "u2", "v2", "w2", "z2",
@@ -240,7 +240,7 @@ namespace GetEquation
         /// <summary>
         /// массив доступных имён переменных (побочных деревьев)
         /// </summary>
-        public static string[] XVarialables = new string[0];
+        public static string[] XVarialables = new string[2000];
         //{
         //    //"G", "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "i1", "j1", "k1", "l1", "m1", "n1", "o1", "p1", "q1",
         //    //"r1", "s1", "t1", "u1", "v1", "w1", "z1",
@@ -283,11 +283,16 @@ namespace GetEquation
         /// <returns></returns>
         public static void GetSystem(Tree givenTree, out string systemX, out string systemXY)
         {
-            cur_level = 0;
-            XVarialables = new string[1] {"G"};
-            XYVarialables = new string[1] { "F" };
+            //cur_level = 0;
+            //XVarialables = new string[1] {"G"};
+            //XYVarialables = new string[1] { "F" };
 
-            Elongation(1);
+            //Elongation(1);
+            for (int i = 0; i < 2000; i++)
+            {
+                XVarialables[i] = i.ToString();
+                XYVarialables[i] = i.ToString();
+            }
 
             //for (int i = 0; i < XYVarialables.Length; i++)
             //{
@@ -320,13 +325,13 @@ namespace GetEquation
                 // добавляем их в массив переменных
                 Add(ref Stack, PlJoinTl, out int num3);
                 Add(ref Stack, PrJoinTr, out int num4);
-                if (cnt >= XYVarialables.Length || num1 >= XYVarialables.Length || num2 >= XYVarialables.Length ||
-                    num3 >= XYVarialables.Length || num4 >= XYVarialables.Length)
-                {
-                    int needable_level = Math.Max(Math.Max(num1, num2), Math.Max(num3, num4));
-                    needable_level = (Math.Max(needable_level, cnt) + 24) / 24;
-                    Elongation(needable_level * 2);
-                }
+                //if (cnt >= XYVarialables.Length || num1 >= XYVarialables.Length || num2 >= XYVarialables.Length ||
+                //    num3 >= XYVarialables.Length || num4 >= XYVarialables.Length)
+                //{
+                //    int needable_level = Math.Max(Math.Max(num1, num2), Math.Max(num3, num4));
+                //    needable_level = (Math.Max(needable_level, cnt) + 24) / 24;
+                //    Elongation(needable_level * 2);
+                //}
                 systemXY += $"{XYVarialables[cnt]} {XYVarialables[num1]} {XYVarialables[num2]} {XYVarialables[num3]} {XYVarialables[num4]}\n";
                 systemX += $"{XVarialables[cnt]} {XVarialables[num1]} {XVarialables[num2]} {XVarialables[num3]} {XVarialables[num4]}\n";
                 cnt++;
