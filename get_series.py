@@ -52,7 +52,7 @@ if __name__ == '__main__':
     file = open('../series.txt', 'w')
     size = len(groups)
     for i in range(size):
-        x_series, xy_series = combo_equations_to_series(groups[i][1:], 9)
+        x_series, xy_series = combo_equations_to_series(groups[i][1:], 7)
         print(groups[i][0][:-1], file=file)
         print(show(x_series), file=file)
         print(show(xy_series) + '\n', file=file)
