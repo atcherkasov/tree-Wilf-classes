@@ -1,6 +1,8 @@
 import numpy as np
 
-
+"""
+функция отображения многочлена от отдной переменной y
+"""
 def show_y(arr):
     step_y = len(arr)
     ans = "("
@@ -18,6 +20,9 @@ def show_y(arr):
     return ans + ')'
 
 
+"""
+функция отображения многочлена от двух переменых x и y
+"""
 def show(arr):
     step_x = len(arr) - 1
     ans = ""
@@ -42,6 +47,7 @@ def mult(a, b):
         for j in range(len(b)):
             ans[i + j] += np.polymul(a[i], b[j])
     return ans
+
 
 # реализуем сложение двух многочленов от x, таких, что коэффициенты при x^i - это
 # многочлены от y

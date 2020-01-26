@@ -14,6 +14,6 @@ def parser(path='../equations.txt'):
     # переменных
     for group in groups:
         for i in range(1, len(group)):
-            group[i] = [int(el) for el in group[i].split()]
+            group[i] = [el for el in group[i].split()]
     file.close()
     return groups
