@@ -1,41 +1,54 @@
 import numpy as np
 from poly_functions import add, make_equlation, show
 from parsers import parser
-
+import sympy as sp
 
 def equations_to_series(equations: list, n: int, xy_equation=True):
-    x = [np.poly1d([1]), np.poly1d([0])]
+    x = sp.Symbol('x')
+    y = sp.Symbol('y')
 
     variable = {}
-    f = add(x, [np.poly1d([0])])
-    variable[0] = f
+    f = x + 0
+    variable['F'] = f
 
+    # присваиваем всем левым частям равенства (т. е. всем переменным кроме F значение 0)
     for i in range(len(equations)):
-        variable[equations[i][0]] = [np.poly1d([0])]
+        variable[equations[i][0]] = 0
 
+    # в цикле "удлинняем" ряды всех переменных
     for i in range(1, n - 1):
         new_variable = {}
-        for j in range(1, len(variable)):
-            new_variable[j] = make_equlation(variable[equations[j - 1][1]],
-                                             variable[equations[j - 1][2]],
-                                             variable[equations[j - 1][3]],
-                                             variable[equations[j - 1][4]],
-                                             xy_equation)
-        for j in range(1, len(variable)):
-            variable[j] = new_variable[j]
+        for j in range(len(equations)):
+            # if j != 'F':
+                # new_variable[j] = make_equlation(variable[equations[j - 1][1]],
+                #                                  variable[equations[j - 1][2]],
+                #                                  variable[equations[j - 1][3]],
+                #                                  variable[equations[j - 1][4]],
+                #                                  xy_equation)
+#             print(j, equations[j][0], equations[j][1], equations[j][2], equations[j][3], equations[j][4])
+            new_variable[equations[j][0]] =x * (variable[equations[j][1]] *\
+                              variable[equations[j][2]] + (y - 1) * \
+                              variable[equations[j][3]] * \
+                              variable[equations[j][4]])
+#         print(new_variable)
+        for j in variable:
+            if j != 'F':
+                variable[j] = new_variable[j]
+        f = x + variable['a1']
+        variable['F'] = f
 
-        f = add(x, variable[1])
-        variable[0] = f
-
-    new_a = make_equlation(variable[equations[0][1]], variable[equations[0][2]],
-                           variable[equations[0][3]], variable[equations[0][4]],
-                           xy_equation)
+    new_a = x * (variable[equations[0][1]] * variable[equations[0][2]] + (y - 1) * \
+            variable[equations[0][3]] * variable[equations[0][4]])
     a = new_a
-    f = add(x, a)
-    cut_f = f[(-2 * i - 4):]
-    return cut_f
+    f = x + a
+    f = sp.collect(sp.expand(f), x)
+    f = f.args[:n] #, x #.args[:n]
+    return f
+#     cut_f = f[(-2 * i - 4):]
+#     return cut_f
 
 
+# TODO:  переделать
 def combo_equations_to_series(equations: list, n: int):
     xy_series = equations_to_series(equations, n)
     x_series = []
