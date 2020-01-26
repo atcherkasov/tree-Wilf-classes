@@ -32,7 +32,7 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
                            xy_equation)
     a = new_a
     f = add(x, a)
-    cut_f = f[(-2 * i - 4):]
+    cut_f = f[(-2 * n - 4):]
     return cut_f
 
 
@@ -49,10 +49,11 @@ if __name__ == '__main__':
     start = time.time()
     groups = parser()
 
+    n = 11
     file = open('../series.txt', 'w')
     size = len(groups)
     for i in range(size):
-        x_series, xy_series = combo_equations_to_series(groups[i][1:], 9)
+        x_series, xy_series = combo_equations_to_series(groups[i][1:], int((n + 1) / 2))
         print(groups[i][0][:-1], file=file)
         print(show(x_series), file=file)
         print(show(xy_series) + '\n', file=file)
