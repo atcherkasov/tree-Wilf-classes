@@ -4,3 +4,4 @@ venv/
 .idea/
 docs/*.txt
 experiments/.ipynb_checkpoints/
+.vs/

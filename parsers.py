@@ -1,4 +1,4 @@
-def parser(path='../equations.txt'):
+def parser(path='../equations_9.txt'):
     file = open(path, 'r')
     groups = []
     group = []

@@ -21,6 +21,7 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
                                              variable[equations[j - 1][3]],
                                              variable[equations[j - 1][4]],
                                              xy_equation)
+            new_variable[j] = new_variable[j][-2 * n + 1:]
         for j in range(1, len(variable)):
             variable[j] = new_variable[j]
 
@@ -32,7 +33,7 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
                            xy_equation)
     a = new_a
     f = add(x, a)
-    cut_f = f[(-2 * n - 4):]
+    cut_f = f[(-2 * n):]
     return cut_f
 
 
@@ -49,11 +50,11 @@ if __name__ == '__main__':
     start = time.time()
     groups = parser()
 
-    n = 11
+    n = 13
     file = open('../series.txt', 'w')
     size = len(groups)
     for i in range(size):
-        x_series, xy_series = combo_equations_to_series(groups[i][1:], int((n + 1) / 2))
+        x_series, xy_series = combo_equations_to_series(groups[i][1:], (n + 1) // 2)
         print(groups[i][0][:-1], file=file)
         print(show(x_series), file=file)
         print(show(xy_series) + '\n', file=file)
@@ -69,4 +70,10 @@ if __name__ == '__main__':
         """
         print(int(i / float(size) * 100), '%')
     file.close()
-    print('ALL TIME:', time.time() - start)
+    all_time = time.time() - start
+    hours = all_time // 3600
+    all_time %= 3600
+    minutes = all_time // 60
+    seconds = all_time % 60
+
+    print('заняло ', hours, 'часов', minutes, 'минут', seconds, 'секунд')
