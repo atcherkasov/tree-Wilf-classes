@@ -3,6 +3,10 @@ from poly_functions import add, make_equlation, show
 from parsers import parser
 
 
+"""
+метод принимает на вход массив уравнение одной системы и желаемую длину ряда
+метод возвращает разложение функции F(x, y) в ряд по x
+"""
 def equations_to_series(equations: list, n: int, xy_equation=True):
     x = [np.poly1d([1]), np.poly1d([0])]
 
@@ -37,6 +41,12 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
     return cut_f
 
 
+"""
+этот метод нужен для получения функции разложения G(x) в ряд
+он просто вызывает метод equations_to_series; 
+получает из F(x, y) G(x);
+и возвражает ОБА разложения в ряд
+"""
 def combo_equations_to_series(equations: list, n: int):
     xy_series = equations_to_series(equations, n)
     x_series = []
@@ -50,7 +60,7 @@ if __name__ == '__main__':
     start = time.time()
     groups = parser()
 
-    n = 13
+    n = 27
     file = open('../series.txt', 'w')
     size = len(groups)
     for i in range(size):
@@ -68,12 +78,12 @@ if __name__ == '__main__':
         # print(show(seriesXY) + '\n', file=file)
         # 16 sec 
         """
-        print(int(i / float(size) * 100), '%')
+        print(round(i / float(size) * 100, 3), '%')
     file.close()
     all_time = time.time() - start
     hours = all_time // 3600
     all_time %= 3600
     minutes = all_time // 60
-    seconds = all_time % 60
+    seconds = round(all_time % 60, 3)
 
-    print('заняло ', hours, 'часов', minutes, 'минут', seconds, 'секунд')
+    print('заняло', hours, 'часов,', minutes, 'минут,', seconds, 'секунд.')
