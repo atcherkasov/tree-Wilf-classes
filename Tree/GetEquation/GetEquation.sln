@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetEquation", "GetEquation\GetEquation.csproj", "{C583B49B-1C04-4966-A9E0-04DA046E0AF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HypothesTest", "..\HypothesTest\HypothesTest.csproj", "{BE319545-06A6-474C-8700-F570FBBB334D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C583B49B-1C04-4966-A9E0-04DA046E0AF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C583B49B-1C04-4966-A9E0-04DA046E0AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C583B49B-1C04-4966-A9E0-04DA046E0AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C583B49B-1C04-4966-A9E0-04DA046E0AF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE319545-06A6-474C-8700-F570FBBB334D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE319545-06A6-474C-8700-F570FBBB334D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE319545-06A6-474C-8700-F570FBBB334D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE319545-06A6-474C-8700-F570FBBB334D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7EF8274-AC65-4F40-8DDD-60D121B0AA0A}
+	EndGlobalSection
+EndGlobal

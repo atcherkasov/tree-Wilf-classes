@@ -21,6 +21,7 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
                                              variable[equations[j - 1][3]],
                                              variable[equations[j - 1][4]],
                                              xy_equation)
+            new_variable[j] = new_variable[j][-2 * n + 1:]
         for j in range(1, len(variable)):
             variable[j] = new_variable[j]
 
@@ -32,8 +33,16 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
                            xy_equation)
     a = new_a
     f = add(x, a)
-    cut_f = f[(-2 * i - 4):]
-    return show(cut_f)
+    cut_f = f[(-2 * n):]
+    return cut_f
+
+
+def combo_equations_to_series(equations: list, n: int):
+    xy_series = equations_to_series(equations, n)
+    x_series = []
+    for poly in xy_series:
+        x_series.append(np.poly1d([poly[0]]))
+    return x_series, xy_series
 
 
 if __name__ == '__main__':
@@ -41,14 +50,30 @@ if __name__ == '__main__':
     start = time.time()
     groups = parser()
 
+    n = 13
     file = open('../series.txt', 'w')
     size = len(groups)
     for i in range(size):
-        seriesXY = equations_to_series(groups[i][1:], 8)
-        seriesX = equations_to_series(groups[i][1:], 7, False)
+        x_series, xy_series = combo_equations_to_series(groups[i][1:], (n + 1) // 2)
         print(groups[i][0][:-1], file=file)
-        print(seriesXY, file=file)
-        print(seriesX + '\n', file=file)
+        print(show(x_series), file=file)
+        print(show(xy_series) + '\n', file=file)
+        """
+        этот кусок кода в среднем работает за 16 сек, в то врем как кусок кода выше
+        работает за 8 сек (он алгоритмически в два раза быстрее)
+        # seriesXY = equations_to_series(groups[i][1:], 6)
+        # seriesX = equations_to_series(groups[i][1:], 6, False)
+        # print(groups[i][0][:-1], file=file)
+        # print(show(seriesX), file=file)
+        # print(show(seriesXY) + '\n', file=file)
+        # 16 sec 
+        """
         print(int(i / float(size) * 100), '%')
     file.close()
-print('ALL TIME:', time.time() - start)
+    all_time = time.time() - start
+    hours = all_time // 3600
+    all_time %= 3600
+    minutes = all_time // 60
+    seconds = all_time % 60
+
+    print('заняло ', hours, 'часов', minutes, 'минут', seconds, 'секунд')
