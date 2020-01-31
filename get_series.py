@@ -1,5 +1,3 @@
-import numpy as np
-from poly_functions import add, make_equlation, show
 from parsers import parser
 
 
@@ -8,6 +6,9 @@ from parsers import parser
 метод возвращает разложение функции F(x, y) в ряд по x
 """
 def equations_to_series(equations: list, n: int, xy_equation=True):
+    import numpy as np
+    from poly_functions import add, make_equlation
+
     x = [np.poly1d([1]), np.poly1d([0])]
 
     variable = {}
@@ -48,6 +49,8 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
 и возвражает ОБА разложения в ряд
 """
 def combo_equations_to_series(equations: list, n: int):
+    import numpy as np
+
     xy_series = equations_to_series(equations, n)
     x_series = []
     for poly in xy_series:
@@ -56,12 +59,13 @@ def combo_equations_to_series(equations: list, n: int):
 
 
 if __name__ == '__main__':
+    from poly_functions import show
     import time
     start = time.time()
     groups, leaf_number = parser()
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    n = 41           # длина ряда!!!
+    n = 15           # длина ряда!!!
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     file = open('results/series_' + leaf_number + '_' + str(n) + '.txt', 'w')
     size = len(groups)
