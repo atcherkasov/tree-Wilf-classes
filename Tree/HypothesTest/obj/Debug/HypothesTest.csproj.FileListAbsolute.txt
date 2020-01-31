@@ -10,11 +10,11 @@ C:/Users/User/Desktop/kurs_2/Kursovaya/WORKING DIRRECTORY/Tree/HypothesTest/bin/
 C:/Users/User/Desktop/kurs_2/Kursovaya/WORKING DIRRECTORY/Tree/HypothesTest/obj/Debug/HypothesTest.csprojAssemblyReference.cache
 C:/Users/User/Desktop/kurs_2/Kursovaya/WORKING DIRRECTORY/Tree/HypothesTest/obj/Debug/HypothesTest.exe
 C:/Users/User/Desktop/kurs_2/Kursovaya/WORKING DIRRECTORY/Tree/HypothesTest/obj/Debug/HypothesTest.pdb
-C:/Users/User/Desktop/kurs_2/Kursovaya/WORKING DIRRECTORY/BigOne/Tree/HypothesTest/bin/Debug/HypothesTest.exe.config
-C:/Users/User/Desktop/kurs_2/Kursovaya/WORKING DIRRECTORY/BigOne/Tree/HypothesTest/bin/Debug/HypothesTest.exe
-C:/Users/User/Desktop/kurs_2/Kursovaya/WORKING DIRRECTORY/BigOne/Tree/HypothesTest/bin/Debug/HypothesTest.pdb
-C:/Users/User/Desktop/kurs_2/Kursovaya/WORKING DIRRECTORY/BigOne/Tree/HypothesTest/obj/Debug/HypothesTest.csprojAssemblyReference.cache
-C:/Users/User/Desktop/kurs_2/Kursovaya/WORKING DIRRECTORY/BigOne/Tree/HypothesTest/obj/Debug/HypothesTest.exe
-C:/Users/User/Desktop/kurs_2/Kursovaya/WORKING DIRRECTORY/BigOne/Tree/HypothesTest/obj/Debug/HypothesTest.pdb
 /Users/Andrey/Desktop/kurs_2/Kursovaya_2_kurs/Tree/HypothesTest/obj/Debug/HypothesTest.exe
 /Users/Andrey/Desktop/kurs_2/Kursovaya_2_kurs/Tree/HypothesTest/obj/Debug/HypothesTest.pdb
+C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\BigOne\Tree\HypothesTest\bin\Debug\HypothesTest.exe.config
+C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\BigOne\Tree\HypothesTest\bin\Debug\HypothesTest.exe
+C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\BigOne\Tree\HypothesTest\bin\Debug\HypothesTest.pdb
+C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\BigOne\Tree\HypothesTest\obj\Debug\HypothesTest.exe
+C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\BigOne\Tree\HypothesTest\obj\Debug\HypothesTest.pdb
+C:\Users\User\Desktop\kurs_2\Kursovaya\WORKING DIRRECTORY\BigOne\Tree\HypothesTest\obj\Debug\HypothesTest.csprojAssemblyReference.cache

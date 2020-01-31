@@ -61,7 +61,7 @@ if __name__ == '__main__':
     groups, leaf_number = parser()
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    n = 41           # длина ряда!!!
+    n = 27           # длина ряда!!!
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     file = open('results/series_' + leaf_number + '_' + str(n) + '.txt', 'w')
     size = len(groups)
