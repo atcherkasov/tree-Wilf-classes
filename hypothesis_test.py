@@ -23,7 +23,7 @@ def groups_info(groups, name):
         print(*groups[i][1])
 
 
-def hyp_test(series_file_path='output_files/series_6_17.txt'):
+def hyp_test(series_file_path='output_files/series_9_55.txt'):
     file = open(series_file_path, 'r')
 
     G = []

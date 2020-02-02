@@ -55,6 +55,14 @@ def combo_equations_to_series(equations: list, n: int):
     return x_series, xy_series
 
 
+def beautiful_time(all_time):
+    hours = all_time // 3600
+    all_time %= 3600
+    minutes = all_time // 60
+    seconds = round(all_time % 60, 3)
+    return str(hours) + ' часов, ' + str(minutes) + ' минут, ' + str(seconds) +' секунд.'
+
+
 if __name__ == '__main__':
     import time
     start = time.time()
@@ -65,6 +73,9 @@ if __name__ == '__main__':
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     file = open('output_files/series_' + leaf_number + '_' + str(n) + '.txt', 'w')
     size = len(groups)
+
+    part = 5
+    part_time = part
     for i in range(size):
         x_series, xy_series = combo_equations_to_series(groups[i][1:], (n + 1) // 2)
         print(groups[i][0][:-1], file=file)
@@ -80,12 +91,12 @@ if __name__ == '__main__':
         # print(show(seriesXY) + '\n', file=file)
         # 16 sec 
         """
-        print(round(i / float(size) * 100, 3), '%')
+        percent = round(i / float(size) * 100, 3)
+        if percent >= part_time:
+            print('посчитанно', str(percent) + '%. За', beautiful_time(time.time() - start))
+            part_time += part
+        else:
+            print(percent, '%')
     file.close()
-    all_time = time.time() - start
-    hours = all_time // 3600
-    all_time %= 3600
-    minutes = all_time // 60
-    seconds = round(all_time % 60, 3)
 
-    print('заняло', hours, 'часов,', minutes, 'минут,', seconds, 'секунд.')
+    print('заняло ' + beautiful_time(time.time() - start))
