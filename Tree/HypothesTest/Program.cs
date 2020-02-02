@@ -14,7 +14,7 @@ namespace HypothesTest
             //Name = openFileDialog1.FileName;
             //string inPut = File.ReadAllText(Name);
 
-            string path = "../../../../results/series_7_21.txt";
+            string path = "../../../../output_files/series_6_17.txt";
             string[] commands = { };
 
             if (File.Exists(path))
