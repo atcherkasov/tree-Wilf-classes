@@ -14,7 +14,7 @@ def show_y(arr):
                 ans += 'y' + '^' + str(step_y) + ' + '
         step_y -= 1
     if arr[0] != 0:
-        ans += str(arr[0])
+        ans += str(int(arr[0]))
     elif ans != '(' and ans[-2] == '+':
         ans = ans[:-3]
     return ans + ')'
