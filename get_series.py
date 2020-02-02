@@ -61,9 +61,9 @@ if __name__ == '__main__':
     groups, leaf_number = parser()
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    n = 27           # длина ряда!!!
+    n = 21           # длина ряда!!!
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    file = open('results/series_' + leaf_number + '_' + str(n) + '.txt', 'w')
+    file = open('output_files/series_' + leaf_number + '_' + str(n) + '.txt', 'w')
     size = len(groups)
     for i in range(size):
         x_series, xy_series = combo_equations_to_series(groups[i][1:], (n + 1) // 2)
