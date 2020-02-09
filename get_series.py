@@ -64,7 +64,7 @@ def combo_equations_to_series(equations: list, n: int):
     xy_series = equations_to_series(equations, n)
     x_series = []
     for poly in xy_series:
-        x_series.append([poly[0]])
+        x_series.append([poly[-1]])
     return x_series, xy_series
 
 
@@ -82,17 +82,17 @@ if __name__ == '__main__':
     from my_poly_functions import show
     import time
     start = time.time()
-    groups, leaf_number = parser('input_files/equations_4.txt')
+    groups, leaf_number = parser('input_files/equations_8.txt')
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    n = 101           # длина ряда!!!
+    n = 75           # длина ряда!!!
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    test_mode = True
+    test_mode = False
     if test_mode:
-        file = open('rubbish_files/series_' + leaf_number + '_' + str(n) + '.txt', 'w')
+        file = open('rubbish_files/nice_series_' + leaf_number + '_' + str(n) + '.txt', 'w')
     else:
-        file = open('output_files/series_' + leaf_number + '_' + str(n) + '.txt', 'w')
-    loges_file = open('loges/time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
+        file = open('output_files/nice_series_' + leaf_number + '_' + str(n) + '.txt', 'w')
+    loges_file = open('loges/nice_time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
                       'w')
     size = len(groups)
 
