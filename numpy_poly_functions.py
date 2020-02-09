@@ -61,22 +61,3 @@ def add(a, b):
         ind -= 1
     return ans
 
-
-def make_equlation(arr, xy_equation=True):
-    a, b, c, d, series_size = arr
-    x = [np.poly1d([1]), np.poly1d([0])]
-    y = [np.poly1d([1, 0])]
-    minus_one = [np.poly1d([-1])]
-    if (xy_equation):
-        return mult(x,
-                    add(mult(a, b),
-                        mult(mult(add(y, minus_one),
-                                  c),
-                             d)))[-2 * series_size + 1:]
-    else:
-        return mult(x,
-                    add(mult(a, b),
-                        mult(mult(minus_one,
-                                  c),
-                             d)))[-2 * series_size + 1:]
-    # return eval('mult(x, (add(mult(a, b), mult(mult(add(y, minus_one), c),d))))')
