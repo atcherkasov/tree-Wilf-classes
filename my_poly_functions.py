@@ -75,19 +75,20 @@ def mult(a, b):
     return ans
 
 
-def make_equation(a, b, c, d, xy_equation=True):
+def make_equation(arr, xy_equation=True):
+    a, b, c, d, series_size = arr
     x = [[1], [0]]
     y = [[1, 0]]
     minus_one = [[-1]]
-    if xy_equation:
+    if (xy_equation):
         return mult(x,
                     add(mult(a, b),
                         mult(mult(add(y, minus_one),
                                   c),
-                             d)))
+                             d)))[-2 * series_size + 1:]
     else:
         return mult(x,
                     add(mult(a, b),
                         mult(mult(minus_one,
                                   c),
-                             d)))
+                             d)))[-2 * series_size + 1:]
