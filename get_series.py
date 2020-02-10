@@ -85,7 +85,7 @@ if __name__ == '__main__':
     groups, leaf_number = parser('input_files/equations_8.txt')
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    n = 75           # длина ряда!!!
+    n = 111           # длина ряда!!!
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     test_mode = False
     if test_mode:
