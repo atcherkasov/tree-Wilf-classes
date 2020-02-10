@@ -14,7 +14,7 @@ namespace HypothesTest
             //Name = openFileDialog1.FileName;
             //string inPut = File.ReadAllText(Name);
 
-            string path = "../../../../output_files/series_6_17.txt";
+            string path = "../../../../output_files/series_8_75.txt";
             string[] commands = { };
 
             if (File.Exists(path))
@@ -30,12 +30,12 @@ namespace HypothesTest
 
             for (int i = 0; i < commands.Length; i++)
             {
-                if (i % 4 == 1)
+                if (i % 4 == 2)
                 {
                     Array.Resize(ref SystemXY, SystemXY.Length + 1);
                     SystemXY[SystemXY.Length - 1] = commands[i];
                 }
-                if (i % 4 == 2)
+                if (i % 4 == 1)
                 {
                     Array.Resize(ref SystemX, SystemX.Length + 1);
                     SystemX[SystemX.Length - 1] = commands[i];
@@ -83,8 +83,12 @@ namespace HypothesTest
                     Console.WriteLine();
                 }
             }
+            Console.WriteLine("количество групп G: " + XGroups.Length);
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
 
-            Console.WriteLine("wwww");
             //if (Gfunction.Checked) goto AvoidanceCase;
 
             // построение XYGroups
@@ -109,7 +113,7 @@ namespace HypothesTest
                     Console.WriteLine();
                 }
             }
-
+            Console.WriteLine("количество групп F: " + XYGroups.Length);
             string ans = "";
 
             //просто проверяем совпадают ли 2 массива массивов XGroups и XYGroups
