@@ -14,7 +14,7 @@ def show_y(arr):
                 ans += 'y' + '^' + str(step_y) + ' + '
         step_y -= 1
     if arr[0] != 0:
-        ans += str(arr[0])
+        ans += str(int(arr[0]))
     elif ans != '(' and ans[-2] == '+':
         ans = ans[:-3]
     return ans + ')'
@@ -62,7 +62,8 @@ def add(a, b):
     return ans
 
 
-def make_equlation(a, b, c, d, xy_equation=True):
+def make_equlation(arr, xy_equation=True):
+    a, b, c, d, series_size = arr
     x = [np.poly1d([1]), np.poly1d([0])]
     y = [np.poly1d([1, 0])]
     minus_one = [np.poly1d([-1])]
@@ -71,11 +72,11 @@ def make_equlation(a, b, c, d, xy_equation=True):
                     add(mult(a, b),
                         mult(mult(add(y, minus_one),
                                   c),
-                             d)))
+                             d)))[-2 * series_size + 1:]
     else:
         return mult(x,
                     add(mult(a, b),
                         mult(mult(minus_one,
                                   c),
-                             d)))
+                             d)))[-2 * series_size + 1:]
     # return eval('mult(x, (add(mult(a, b), mult(mult(add(y, minus_one), c),d))))')
