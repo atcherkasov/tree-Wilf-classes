@@ -63,5 +63,5 @@ def hyp_test(series_file_path='output_files/series_9_73.txt'):
 
 
 if __name__ == '__main__':
-    hyp_test('output_files/nice_series_8_111.txt')
+    hyp_test('output_files/nice_series_9_101.txt')
     # hyp_test('rubbish_files/series_4_101.txt')
