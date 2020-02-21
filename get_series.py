@@ -7,7 +7,6 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
     метод возвращает разложение функции F(x, y) в ряд по x
     """
     global pool
-    import numpy as np
     from my_poly_functions import add, make_equation
 
     x = [[1], [0]]
@@ -20,8 +19,6 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
         variable[equations[i][0]] = [[0]]
 
     for i in range(1, n - 1):
-        new_variable = {}
-
         arguments = []
         for j in range(1, len(variable)):
             arguments.append([variable[equations[j - 1][1]],
@@ -30,14 +27,7 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
                               variable[equations[j - 1][4]], n])
         result = pool.map(make_equation, arguments)
 
-        # for j in range(1, len(variable)):
-        #     new_variable[j] = make_equlation(variable[equations[j - 1][1]],
-        #                                      variable[equations[j - 1][2]],
-        #                                      variable[equations[j - 1][3]],
-        #                                      variable[equations[j - 1][4]],
-        #                                      xy_equation)
-        #     new_variable[j] = new_variable[j][-2 * n + 1:]
-        for j in range( len(variable) - 1):
+        for j in range(len(variable) - 1):
             variable[j + 1] = result[j]
 
         f = add(x, variable[1])
@@ -59,8 +49,6 @@ def combo_equations_to_series(equations: list, n: int):
     получает из F(x, y) G(x);
     и возвражает ОБА разложения в ряд
     """
-    import numpy as np
-
     xy_series = equations_to_series(equations, n)
     x_series = []
     for poly in xy_series:
@@ -82,18 +70,21 @@ if __name__ == '__main__':
     from my_poly_functions import show
     import time
     start = time.time()
-    groups, leaf_number = parser('input_files/equations_8.txt')
+    groups, leaf_number = parser('input_files/short_equations_9.txt')
 
-    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    n = 111           # длина ряда!!!
-    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    test_mode = False
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    n = 111               # длина ряда!!!
+    test_mode = False     # тестовый режим активирован?
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
     if test_mode:
-        file = open('rubbish_files/nice_series_' + leaf_number + '_' + str(n) + '.txt', 'w')
+        file = open('rubbish_files/_nice_series_' + leaf_number + '_' + str(n) + '.txt', 'w')
+        loges_file = open('loges/test_short_time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
+                          'w')
     else:
-        file = open('output_files/nice_series_' + leaf_number + '_' + str(n) + '.txt', 'w')
-    loges_file = open('loges/nice_time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
-                      'w')
+        file = open('output_files/short_nice_series_' + leaf_number + '_' + str(n) + '.txt', 'w')
+        loges_file = open('loges/short_time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
+                          'w')
     size = len(groups)
 
     part = 5
@@ -125,7 +116,7 @@ if __name__ == '__main__':
             print(percent, '%')
     file.close()
 
-    print('заняло ' + beautiful_time(time.time() - start), file=loges_file)
+    print('    заняло ' + beautiful_time(time.time() - start), file=loges_file)
     print('заняло ' + beautiful_time(time.time() - start))
     loges_file.close()
 
