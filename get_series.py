@@ -7,7 +7,6 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
     метод возвращает разложение функции F(x, y) в ряд по x
     """
     global pool
-    import numpy as np
     from my_poly_functions import add, make_equation
 
     x = [[1], [0]]
@@ -50,8 +49,6 @@ def combo_equations_to_series(equations: list, n: int):
     получает из F(x, y) G(x);
     и возвражает ОБА разложения в ряд
     """
-    import numpy as np
-
     xy_series = equations_to_series(equations, n)
     x_series = []
     for poly in xy_series:
@@ -73,12 +70,13 @@ if __name__ == '__main__':
     from my_poly_functions import show
     import time
     start = time.time()
-    groups, leaf_number = parser('input_files/equations_8.txt')
+    groups, leaf_number = parser('input_files/short_equations_9.txt')
 
-    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    n = 75           # длина ряда!!!
-    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    test_mode = True
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    n = 111               # длина ряда!!!
+    test_mode = False     # тестовый режим активирован?
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
     if test_mode:
         file = open('rubbish_files/_nice_series_' + leaf_number + '_' + str(n) + '.txt', 'w')
         loges_file = open('loges/test_short_time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
