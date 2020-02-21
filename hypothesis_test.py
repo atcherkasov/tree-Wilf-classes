@@ -1,3 +1,32 @@
+def parse_series_file(series_file_path: str):
+    """
+    функця которая парсит файл с рядами на массивы с которыми уже можно работать
+    формат в котором записаны ряды: 1. строчная запись графа
+                                    2. ряд G
+                                    3. ряд F
+                                    4. пустая строка
+    :param series_file_path: путь к файлу с рядами
+    :return: 3 массива: 1. массив со строчной записью графа
+                        2. массив с рядами G
+                        3. массив с рядами F
+    """
+    file = open(series_file_path, 'r')
+    G = []
+    F = []
+    Graphs = []
+    tact = 0
+    for line in file:
+        if tact % 4 == 0:
+            Graphs.append([line, tact // 4])
+        if tact % 4 == 1:
+            G.append([line, tact // 4])
+        if tact % 4 == 2:
+            F.append([line, tact // 4])
+        tact += 1
+    file.close()
+    return Graphs, G, F
+
+
 def create_group(series: list) -> list:
     """
     функция которая разбивает данные из дефолтного файла series_n_len.txt
@@ -35,35 +64,6 @@ def groups_info(groups: list, name: str):
         print(*groups[i][1])
 
 
-def parse_series_file(series_file_path: str):
-    """
-    функця которая парсит файл с рядами на массивы с которыми уже можно работать
-    формат в котором записаны ряды: 1. строчная запись графа
-                                    2. ряд G
-                                    3. ряд F
-                                    4. пустая строка
-    :param series_file_path: путь к файлу с рядами
-    :return: 3 массива: 1. массив со строчной записью графа
-                        2. массив с рядами G
-                        3. массив с рядами F
-    """
-    file = open(series_file_path, 'r')
-    G = []
-    F = []
-    Graphs = []
-    tact = 0
-    for line in file:
-        if tact % 4 == 0:
-            Graphs.append([line, tact // 4])
-        if tact % 4 == 1:
-            G.append([line, tact // 4])
-        if tact % 4 == 2:
-            F.append([line, tact // 4])
-        tact += 1
-    file.close()
-    return Graphs, G, F
-
-
 def hyp_test(series_file_path='output_files/series_9_73.txt', meta_mode=True):
     """
     основна функция проверки гипотезы
@@ -99,4 +99,4 @@ def hyp_test(series_file_path='output_files/series_9_73.txt', meta_mode=True):
 
 if __name__ == '__main__':
     hyp_test('output_files/nice_series_9_101.txt')
-    # hyp_test('rubbish_files/series_4_101.txt')
+    # hyp_test('rubbish_files/nice_series_9_33.txt')
