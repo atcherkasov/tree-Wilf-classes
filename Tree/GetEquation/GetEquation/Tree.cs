@@ -171,6 +171,38 @@ namespace GetEquation
             return ans;
         }
 
+        /// <summary>
+        /// проверяет являются ли два данных дерева симметричными
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool IsSymmetric(Tree a, Tree b)
+        {
+            if (a.ArrayForm.Length != b.ArrayForm.Length)
+                return false;
+
+            bool ans = true;
+            // будем проверять на перевёрнутые массивы в порядке ёлочки
+            int left = 0;    
+            int right = 0;
+            while (right <= a.ArrayForm.Length - 1)
+            {
+                for (int i = left; i <= right; i++)
+                {
+                    if (a.ArrayForm[i] != b.ArrayForm[right - i + left])
+                    {
+                        ans = false;
+                        break;
+                    }
+                }
+                if (!ans)
+                    break;
+                left = 2 * left + 1;
+                right = 2 * right + 2;
+            }
+            return ans;
+        }
 
         /// <summary>
         /// добавляет новое дерево если оно раньше не было получено и бездействует в противном случае
@@ -283,27 +315,12 @@ namespace GetEquation
         /// <returns></returns>
         public static void GetSystem(Tree givenTree, out string systemX, out string systemXY)
         {
-            //cur_level = 0;
-            //XVarialables = new string[1] {"G"};
-            //XYVarialables = new string[1] { "F" };
-
-            //Elongation(1);
             for (int i = 0; i < 2000; i++)
             {
                 XVarialables[i] = i.ToString();
                 XYVarialables[i] = i.ToString();
             }
 
-            //for (int i = 0; i < XYVarialables.Length; i++)
-            //{
-            //    Console.Write(XYVarialables[i] + " ");
-            //}
-
-            //Console.WriteLine();
-            //for (int i = 0; i < XVarialables.Length; i++)
-            //{
-            //    Console.Write(XVarialables[i] + " ");
-            //}
             Tree tree = new Tree((bool[])(givenTree.ArrayForm).Clone());
             Cut(tree, out Tree Tl, out Tree Tr);
             Tree[] Stack = new Tree[] { new Tree(new[] { true }), new Tree(new[] { true, true, true }) };
@@ -391,5 +408,8 @@ namespace GetEquation
             }
             return ans;
         }
+
+
+   
     }
 }

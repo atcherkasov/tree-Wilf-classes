@@ -1,4 +1,4 @@
-def show_y(arr):
+def show_y(arr: list) -> list:
     step_y = len(arr) - 1
     ans = "("
     for j in range(len(arr) - 1):
@@ -15,7 +15,7 @@ def show_y(arr):
     return ans + ')'
 
 
-def show(arr):
+def show(arr: list) -> list:
     step_x = len(arr) - 1
     ans = ""
     for i in range(len(arr) - 1):
@@ -30,7 +30,7 @@ def show(arr):
     return ans
 
 
-def add_y(a, b):
+def add_y(a: list, b: list) -> list:
     if len(a) < len(b):
         a, b = b, a
     ans = a[::]
@@ -41,7 +41,7 @@ def add_y(a, b):
     return ans
 
 
-def add(a, b):
+def add(a: list, b: list) -> list:
     if len(a) < len(b):
         a, b = b, a
     ans = a[::]
@@ -52,10 +52,10 @@ def add(a, b):
     return ans
 
 
-def mult_y(a, b):
+def mult_y(a: list, b: list) -> list:
     ans = [0] * (len(a) + len(b) - 1)
     for i in range(len(a)):
-        # ����� ��������� ����������� ��� x^((len(a) + len(b) - 1) - i)
+        # хотим вычислить коэффициент при x^((len(a) + len(b) - 1) - i)
         for j in range(len(b)):
             ans[i + j] += a[i] * b[j]
     i = 0
@@ -66,13 +66,24 @@ def mult_y(a, b):
     return ans[i:]
 
 
-def mult(a, b):
+def mult(a: list, b: list, size: int) -> list:
+    """
+    вычисляет произведение двух мнгочленов от двух переменных
+    :param a:
+    :param b:
+    :param size: размер по которому я 'обрезаю' многочлен.
+                 Нужно для того, чтобы все степени многочлена
+                 по х не превосходили заданного значение
+                 (оно как раз и задаётся через size)
+    :return:
+    """
     ans = [[0]] * (len(a) + len(b) - 1)
     for i in range(len(a)):
-        # ����� ��������� ����������� ��� x^((len(a) + len(b) - 1) - i)
+        # хотим вычислить коэффициент при x^((len(a) + len(b) - 1) - i)
         for j in range(len(b)):
-            ans[i + j] = add_y(ans[i + j], mult_y(a[i], b[j]))
-    return ans
+            if (len(a) + len(b) - 1) - size <= i + j:
+                ans[i + j] = add_y(ans[i + j], mult_y(a[i], b[j]))
+    return ans[-size:]
 
 
 def make_equation(arr, xy_equation=True):
@@ -82,13 +93,19 @@ def make_equation(arr, xy_equation=True):
     minus_one = [[-1]]
     if (xy_equation):
         return mult(x,
-                    add(mult(a, b),
+                    add(mult(a, b, 2 * series_size + 1),
                         mult(mult(add(y, minus_one),
-                                  c),
-                             d)))[-2 * series_size + 1:]
+                                  c,
+                                  2 * series_size + 1),
+                             d,
+                             2 * series_size + 1)),
+                    2 * series_size + 1)[-2 * series_size + 1:]
     else:
         return mult(x,
-                    add(mult(a, b),
+                    add(mult(a, b, 2 * series_size + 1),
                         mult(mult(minus_one,
-                                  c),
-                             d)))[-2 * series_size + 1:]
+                                  c,
+                                  2 * series_size + 1),
+                             d,
+                             2 * series_size + 1)),
+                    2 * series_size + 1)[-2 * series_size + 1:]

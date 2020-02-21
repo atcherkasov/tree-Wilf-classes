@@ -14,11 +14,6 @@ namespace GetEquation
             Console.Write("Введите n: ");
 
 
-            //Tree tree = new Tree(new bool[] { true, true, true, true, true, true, true, false, false, true, 
-            //                                  true, true, true, false, false, false, false, false, false, false, false,
-            //                                  false, false, true, true, false, false, false, false, false, false,});
-
-
             int n;
             int.TryParse(Console.ReadLine(), out n);
 
@@ -52,7 +47,7 @@ namespace GetEquation
                 Counting = new Tree[0];
             }
 
-            using (StreamWriter fs = new StreamWriter("../../../../../input_files/equations_" + n + ".txt", false, System.Text.Encoding.Default))
+            using (StreamWriter fs = new StreamWriter("../../../../../input_files/short_equations_" + n + ".txt", false, System.Text.Encoding.Default))
             {
 
                 Console.WriteLine(AlreadyCounted.Length);
@@ -63,7 +58,7 @@ namespace GetEquation
                     bool isRepeated = false;
                     for (int k = 0; k < j; k++)
                     {
-                        if (Tree.IsSame(AlreadyCounted[k], AlreadyCounted[j]))
+                        if (Tree.IsSame(AlreadyCounted[k], AlreadyCounted[j]) || Tree.IsSymmetric(AlreadyCounted[k], AlreadyCounted[j]))
                         {
                             isRepeated = true;
                             break;
