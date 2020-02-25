@@ -70,15 +70,15 @@ if __name__ == '__main__':
     from my_poly_functions import show
     import time
     start = time.time()
-    groups, leaf_number = parser('input_files/short_equations_9.txt')
+    groups, leaf_number = parser('input_files/short_equations_10.txt')
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    n = 111               # длина ряда!!!
-    test_mode = False     # тестовый режим активирован?
+    n = 13               # длина ряда!!!
+    test_mode = True     # тестовый режим активирован?
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     if test_mode:
-        file = open('rubbish_files/_nice_series_' + leaf_number + '_' + str(n) + '.txt', 'w')
+        file = open('rubbish_files/short_nice_series_' + leaf_number + '_' + str(n) + '.txt', 'w')
         loges_file = open('loges/test_short_time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
                           'w')
     else:
@@ -116,7 +116,7 @@ if __name__ == '__main__':
             print(percent, '%')
     file.close()
 
-    print('    заняло ' + beautiful_time(time.time() - start), file=loges_file)
+    print('                заняло ' + beautiful_time(time.time() - start), file=loges_file)
     print('заняло ' + beautiful_time(time.time() - start))
     loges_file.close()
 
