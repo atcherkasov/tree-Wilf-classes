@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GetEquation
 {
-    partial class TreeInit
+    partial class Tree
     {
         /// <summary>
         /// проверяет два дерева a и b на равенство 
@@ -14,7 +14,7 @@ namespace GetEquation
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static bool IsSame(TreeInit a, TreeInit b)
+        public static bool IsSame(Tree a, Tree b)
         {
             bool[] Arra = (bool[])a.ArrayForm.Clone();
             bool[] Arrb = (bool[])b.ArrayForm.Clone();
@@ -38,7 +38,7 @@ namespace GetEquation
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static bool IsSymmetric(TreeInit a, TreeInit b)
+        public static bool IsSymmetric(Tree a, Tree b)
         {
             if (a.ArrayForm.Length != b.ArrayForm.Length)
                 return false;

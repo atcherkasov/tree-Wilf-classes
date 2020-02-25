@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GetEquation
 {
-    partial class TreeInit
+    partial class Tree
     {
         /// <summary>
         /// форма хранения дерева в массиве
@@ -18,7 +18,7 @@ namespace GetEquation
         /// конструктор класса Tree от одного параметра (массива True и False)
         /// </summary>
         /// <param name="ArrayForm"></param>
-        public TreeInit(bool[] ArrayForm)
+        public Tree(bool[] ArrayForm)
         {
             this.ArrayForm = ArrayForm;
         }
@@ -36,10 +36,10 @@ namespace GetEquation
         }
 
 
-        /// <summary>
-        /// массив доступных имён переменных (побочных деревьев)
-        /// </summary>
-        public static string[] XYVarialables = new string[200];
+        ///// <summary>
+        ///// массив доступных имён переменных (побочных деревьев)
+        ///// </summary>
+        //public static string[] XYVarialables = new string[200];
 
         /// <summary>
         /// массив доступных имён переменных (побочных деревьев)

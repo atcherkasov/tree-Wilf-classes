@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GetEquation
 {
-    partial class TreeInit
+    partial class Tree
     {
         /// <summary>
         /// по заданному дереву строит все возможные деревья полученные из него путём увеличения кол-ва листьев на 1
@@ -15,11 +15,11 @@ namespace GetEquation
         /// <param name="tree"></param>
         /// <param name="ans"></param>
         /// <returns></returns>
-        public static TreeInit[] AddLeaf(int v, TreeInit tree, ref TreeInit[] ans)
+        public static Tree[] AddLeaf(int v, Tree tree, ref Tree[] ans)
         {
             if (2 * v + 2 >= tree.ArrayForm.Length)
             {
-                TreeInit newTree = new TreeInit((bool[])tree.ArrayForm.Clone()); // новое дерево полученное из данного путём увеличения кол-ва листьев на 1
+                Tree newTree = new Tree((bool[])tree.ArrayForm.Clone()); // новое дерево полученное из данного путём увеличения кол-ва листьев на 1
                 Array.Resize(ref newTree.ArrayForm, newTree.ArrayForm.Length * 2 + 1);
                 newTree.ArrayForm[2 * v + 1] = true;
                 newTree.ArrayForm[2 * v + 2] = true;
@@ -29,7 +29,7 @@ namespace GetEquation
             }
             else if (!tree[2 * v + 2])
             {
-                TreeInit newTree = new TreeInit((bool[])tree.ArrayForm.Clone()); // новое дерево полученное из данного путём увеличения кол-ва листьев на 1
+                Tree newTree = new Tree((bool[])tree.ArrayForm.Clone()); // новое дерево полученное из данного путём увеличения кол-ва листьев на 1
                 newTree.ArrayForm[2 * v + 1] = true;
                 newTree.ArrayForm[2 * v + 2] = true;
                 Array.Resize(ref ans, ans.Length + 1);

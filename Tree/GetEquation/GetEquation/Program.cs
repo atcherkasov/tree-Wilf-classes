@@ -19,9 +19,9 @@ namespace GetEquation
 
             string[] ans = new string[0];
 
-            TreeInit[] AlreadyCounted = new TreeInit[1] { new TreeInit(new[] { true, true, true }) }; // массив деревьев с n листьями
+            Tree[] AlreadyCounted = new Tree[1] { new Tree(new[] { true, true, true }) }; // массив деревьев с n листьями
                                                                                           // (n - изменяется) для который мы уже составил системы
-            TreeInit[] Counting = new TreeInit[0]; // массив деревьев с n + 1 листьями (n - изменяется)
+            Tree[] Counting = new Tree[0]; // массив деревьев с n + 1 листьями (n - изменяется)
                                            // для который мы ещё не составили системы
 
             for (int i = 3; i <= n; i++) // цикл по размерности массива Counting
@@ -31,9 +31,9 @@ namespace GetEquation
                                                                 // (которые вес уже построены и лежат в массиве AlreadyCounted),
                                                                 // чтобы к каждому из них добавить по листу всевозможными способами
                 {
-                    TreeInit[] newTrees = new TreeInit[0]; // массив со всевозможными деревьями с i листьями,
+                    Tree[] newTrees = new Tree[0]; // массив со всевозможными деревьями с i листьями,
                                                    // которые можно получить из дерева AlreadyCounted[j]
-                    TreeInit.AddLeaf(0, AlreadyCounted[j], ref newTrees);
+                    Tree.AddLeaf(0, AlreadyCounted[j], ref newTrees);
                     Array.Resize(ref Counting, Counting.Length + newTrees.Length);
                     for (int k = Counting.Length - newTrees.Length;
                             k < Counting.Length;
@@ -43,8 +43,8 @@ namespace GetEquation
                     }
                 }
 
-                AlreadyCounted = (TreeInit[])Counting.Clone();
-                Counting = new TreeInit[0];
+                AlreadyCounted = (Tree[])Counting.Clone();
+                Counting = new Tree[0];
                 Console.WriteLine(i);
             }
 
@@ -52,14 +52,16 @@ namespace GetEquation
             {
 
                 Console.WriteLine(AlreadyCounted.Length);
+                int cnt = 0;
                 for (int j = 0; j < AlreadyCounted.Length; j++)
                 {
                     // проверка на повторяемость (нужна для того чтобы в файле Вольфрама не было
                     // одинаковых графов)
+                    Console.WriteLine(((double)j) / AlreadyCounted.Length + "%");
                     bool isRepeated = false;
                     for (int k = 0; k < j; k++)
                     {
-                        if (TreeInit.IsSame(AlreadyCounted[k], AlreadyCounted[j]) || TreeInit.IsSymmetric(AlreadyCounted[k], AlreadyCounted[j]))
+                        if (Tree.IsSame(AlreadyCounted[k], AlreadyCounted[j]) || Tree.IsSymmetric(AlreadyCounted[k], AlreadyCounted[j]))
                         {
                             isRepeated = true;
                             break;
@@ -68,18 +70,20 @@ namespace GetEquation
 
                     if (!isRepeated)
                     {
-                        TreeInit.GetSystem(AlreadyCounted[j], out string systemX, out string systemXY);
+                        Tree.GetSystem(AlreadyCounted[j], out string system);
 
                         fs.WriteLine(AlreadyCounted[j].WolframForm());
-                        fs.WriteLine(systemXY);
+                        fs.WriteLine(system);
+                        cnt++;
                         //fs.WriteLine(AlreadyCounted[j].WolframForm());
                         //fs.WriteLine(systemX);
                         //Console.WriteLine();
                     }
-                    Console.WriteLine(((double)j) / AlreadyCounted.Length + "%");
+                   
                 }
-                Console.ReadLine();
+                Console.WriteLine($"cnt: {cnt}");
             }
+            Console.ReadLine();
 
 
         }

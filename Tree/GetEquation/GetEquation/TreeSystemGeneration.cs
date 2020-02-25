@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GetEquation
 {
-    partial class TreeInit
+    partial class Tree
     {
         /// <summary>
         /// Функция используется в методе Cut
@@ -33,7 +33,7 @@ namespace GetEquation
         /// <param name="v"></param>
         /// <param name="bigTree"></param>
         /// <param name="subtree"></param>
-        public static void dfs(int v, TreeInit bigTree, ref TreeInit subtree)
+        public static void dfs(int v, Tree bigTree, ref Tree subtree)
         {
             if (bigTree[v])
             {
@@ -55,11 +55,11 @@ namespace GetEquation
         /// <param name="bigTree"></param>
         /// <param name="leftTree"></param>
         /// <param name="rightTree"></param>
-        public static void Cut(TreeInit bigTree, out TreeInit leftTree, out TreeInit rightTree)
+        public static void Cut(Tree bigTree, out Tree leftTree, out Tree rightTree)
         {
-            leftTree = new TreeInit(new bool[bigTree.ArrayForm.Length / 2]);
-            rightTree = new TreeInit(new bool[bigTree.ArrayForm.Length / 2]);
-            TreeInit ProcessedTree = new TreeInit((bool[])bigTree.ArrayForm.Clone());
+            leftTree = new Tree(new bool[bigTree.ArrayForm.Length / 2]);
+            rightTree = new Tree(new bool[bigTree.ArrayForm.Length / 2]);
+            Tree ProcessedTree = new Tree((bool[])bigTree.ArrayForm.Clone());
             dfs(1, ProcessedTree, ref leftTree);
             Array.ConvertAll(rightTree.ArrayForm, y => false);
             for (int i = 2; i < ProcessedTree.ArrayForm.Length; i++)
@@ -80,7 +80,7 @@ namespace GetEquation
         /// <param name="Stack">массив уже полученыых деревьев (путём постепенного составления уравнений системы)</param>
         /// <param name="A">дерево которые мы проверяем на налчие в этом массиве</param>
         /// <param name="ownNum">это номер который будет у дерева после выполнения этого метода</param>
-        public static void Add(ref TreeInit[] Stack, TreeInit A, out int ownNum)
+        public static void Add(ref Tree[] Stack, Tree A, out int ownNum)
         {
             bool haveA = false;
             ownNum = -1;
@@ -96,7 +96,7 @@ namespace GetEquation
             if (!haveA)
             {
                 Array.Resize(ref Stack, Stack.Length + 1);
-                Stack[Stack.Length - 1] = new TreeInit((bool[])A.ArrayForm.Clone());
+                Stack[Stack.Length - 1] = new Tree((bool[])A.ArrayForm.Clone());
                 ownNum = Stack.Length - 1;
             }
             return;
@@ -109,7 +109,7 @@ namespace GetEquation
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static TreeInit Join(TreeInit a, TreeInit b)
+        public static Tree Join(Tree a, Tree b)
         {
             Array.Resize(ref a.ArrayForm, Math.Max(a.ArrayForm.Length, b.ArrayForm.Length));
             Array.Resize(ref b.ArrayForm, a.ArrayForm.Length);
@@ -125,53 +125,79 @@ namespace GetEquation
 
 
         /// <summary>
+        /// возвращает строку, которая при запуске в Wolfram Mathematica рисует заданное дерево
+        /// </summary>
+        /// <param name="ArrayForm"></param>
+        /// <returns></returns>
+        public string WolframForm()
+        {
+            string ans = "Graph[{";
+            for (int i = 1; i < this.ArrayForm.Length; i++)
+            {
+                if (this[i])
+                {
+                    ans += $"{(i - 1) / 2}->{i},";
+                }
+            }
+            if (ans == "Graph[{")
+            {
+                ans += "0->0}]";
+            }
+            else
+            {
+                ans = ans.Substring(0, ans.Length - 1) + "}]";
+            }
+            return ans;
+        }
+
+
+        /// <summary>
         /// метод строящий системы уравнений для заданного дерева
         /// </summary>
         /// <param name="tree"></param>
         /// <returns></returns>
-        public static void GetSystem(TreeInit givenTree, out string systemX, out string systemXY)
+        public static void GetSystem(Tree givenTree, out string system)
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 200; i++)
             {
                 XVarialables[i] = i.ToString();
-                XYVarialables[i] = i.ToString();
+                //XYVarialables[i] = i.ToString();
             }
 
-            TreeInit tree = new TreeInit((bool[])(givenTree.ArrayForm).Clone());
-            Cut(tree, out TreeInit Tl, out TreeInit Tr);
-            TreeInit[] Stack = new TreeInit[] { new TreeInit(new[] { true }), new TreeInit(new[] { true, true, true }) };
+            Tree tree = new Tree((bool[])(givenTree.ArrayForm).Clone());
+            Cut(tree, out Tree Tl, out Tree Tr);
+            Tree[] Stack = new Tree[] { new Tree(new[] { true }), new Tree(new[] { true, true, true }) };
             int cnt = 1;
-            systemXY = "";
-            systemX = "";
+            system = "";
             while (cnt < Stack.Length)
             {
                 // получаем так называемые Pl и Pr
-                Cut(Stack[cnt], out TreeInit Pl, out TreeInit Pr);
+                Cut(Stack[cnt], out Tree Pl, out Tree Pr);
 
                 // добавляем их в массив переменных
                 Add(ref Stack, Pl, out int num1);
                 Add(ref Stack, Pr, out int num2);
 
-                TreeInit PlJoinTl = Join(Pl, Tl); // получаем объеденение Pl и Tl
-                TreeInit PrJoinTr = Join(Pr, Tr); // получаем объеденение Pr и Tr
+                Tree PlJoinTl = Join(Pl, Tl); // получаем объеденение Pl и Tl
+                Tree PrJoinTr = Join(Pr, Tr); // получаем объеденение Pr и Tr
 
                 // добавляем их в массив переменных
                 Add(ref Stack, PlJoinTl, out int num3);
                 Add(ref Stack, PrJoinTr, out int num4);
                 
-                while (cnt >= XYVarialables.Length || num1 >= XYVarialables.Length || num2 >= XYVarialables.Length ||
-                    num3 >= XYVarialables.Length || num4 >= XYVarialables.Length)
+                while (cnt >= XVarialables.Length || num1 >= XVarialables.Length || num2 >= XVarialables.Length ||
+                    num3 >= XVarialables.Length || num4 >= XVarialables.Length)
                 {
                     Array.Resize(ref XVarialables, XVarialables.Length * 2);
-                    Array.Resize(ref XYVarialables, XYVarialables.Length * 2);
+                    //Array.Resize(ref XYVarialables, XYVarialables.Length * 2);
                     for (int i = XVarialables.Length / 2; i < XVarialables.Length; i++)
                     {
                         XVarialables[i] = i.ToString();
-                        XYVarialables[i] = i.ToString();
+                        //XYVarialables[i] = i.ToString();
                     }
                 }
-                systemXY += $"{XYVarialables[cnt]} {XYVarialables[num1]} {XYVarialables[num2]} {XYVarialables[num3]} {XYVarialables[num4]}\n";
-                systemX += $"{XVarialables[cnt]} {XVarialables[num1]} {XVarialables[num2]} {XVarialables[num3]} {XVarialables[num4]}\n";
+                //system += $"{XYVarialables[cnt]} {XYVarialables[num1]} {XYVarialables[num2]} {XYVarialables[num3]} {XYVarialables[num4]}\n";
+                system += $"{XVarialables[cnt]} {XVarialables[num1]} {XVarialables[num2]} {XVarialables[num3]} {XVarialables[num4]}\n";
                 cnt++;
 
             }

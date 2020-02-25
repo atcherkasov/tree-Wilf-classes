@@ -6,42 +6,15 @@ using System.Threading.Tasks;
 
 namespace GetEquation
 {
-    partial class TreeInit
+    partial class Tree
     {
-        /// <summary>
-        /// возвращает строку, которая при запуске в Wolfram Mathematica рисует заданное дерево
-        /// </summary>
-        /// <param name="ArrayForm"></param>
-        /// <returns></returns>
-        public string WolframForm()
-        {
-            string ans = "Graph[{";
-            for (int i = 1; i < this.ArrayForm.Length; i++)
-            {
-                if (this[i])
-                {
-                    ans += $"{(i - 1) / 2}->{i},";
-                }
-            }
-            if (ans == "Graph[{")
-            {
-                ans += "0->0}]";
-            }
-            else
-            {
-                ans = ans.Substring(0, ans.Length - 1) + "}]";
-            }
-            return ans;
-        }
-
-
         public static int cur_level = 0;
 
 
         public static void Elongation(int new_level)
         {
-            int index = XYVarialables.Length;
-            Array.Resize(ref XYVarialables, new_level * 24 + 1);
+            int index = XVarialables.Length;
+            //Array.Resize(ref XYVarialables, new_level * 24 + 1);
             Array.Resize(ref XVarialables, new_level * 24 + 1);
 
 
@@ -52,7 +25,7 @@ namespace GetEquation
                 for (int i = 0; i < 24; i++)
                 {
                     XVarialables[index] = letters[i] + level.ToString();
-                    XYVarialables[index] = letters[i] + level.ToString();
+                    //XYVarialables[index] = letters[i] + level.ToString();
                     index++;
                 }
                 level++;
