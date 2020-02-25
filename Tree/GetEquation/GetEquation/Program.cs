@@ -45,16 +45,19 @@ namespace GetEquation
 
                 AlreadyCounted = (Tree[])Counting.Clone();
                 Counting = new Tree[0];
+                Console.WriteLine(i);
             }
 
-            using (StreamWriter fs = new StreamWriter("../../../../../input_files/short_equations_" + n + ".txt", false, System.Text.Encoding.Default))
+            using (StreamWriter fs = new StreamWriter("../../../../../input_files/degug_" + n + ".txt", false, System.Text.Encoding.Default))
             {
 
                 Console.WriteLine(AlreadyCounted.Length);
+                int cnt = 0;
                 for (int j = 0; j < AlreadyCounted.Length; j++)
                 {
                     // проверка на повторяемость (нужна для того чтобы в файле Вольфрама не было
                     // одинаковых графов)
+                    Console.WriteLine(((double)j) / AlreadyCounted.Length + "%");
                     bool isRepeated = false;
                     for (int k = 0; k < j; k++)
                     {
@@ -67,16 +70,20 @@ namespace GetEquation
 
                     if (!isRepeated)
                     {
-                        Tree.GetSystem(AlreadyCounted[j], out string systemX, out string systemXY);
+                        Tree.GetSystem(AlreadyCounted[j], out string system);
 
                         fs.WriteLine(AlreadyCounted[j].WolframForm());
-                        fs.WriteLine(systemXY);
+                        fs.WriteLine(system);
+                        cnt++;
                         //fs.WriteLine(AlreadyCounted[j].WolframForm());
                         //fs.WriteLine(systemX);
                         //Console.WriteLine();
                     }
+                   
                 }
+                Console.WriteLine($"cnt: {cnt}");
             }
+            Console.ReadLine();
 
 
         }
