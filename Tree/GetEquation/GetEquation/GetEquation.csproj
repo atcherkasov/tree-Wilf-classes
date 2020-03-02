@@ -45,7 +45,11 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tree.cs" />
+    <Compile Include="TreeInit.cs" />
+    <Compile Include="TreeFilter.cs" />
+    <Compile Include="TreeGen.cs" />
+    <Compile Include="TreeSystemGeneration.cs" />
+    <Compile Include="TreeUnusedFunctions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
