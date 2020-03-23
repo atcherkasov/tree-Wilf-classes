@@ -1,7 +1,6 @@
 def show_local(arr: list, loc='y') -> list:
     step_y = len(arr) - 1
     ans = "("
-    print(arr)
     for j in range(len(arr) - 1):
         if arr[j] != 0:
             if arr[j] != 1:
@@ -19,10 +18,7 @@ def show_local(arr: list, loc='y') -> list:
 def show_global(arr: list, glob='x', loc='y') -> list:
     step_x = len(arr) - 1
     ans = ""
-    print(arr)
     for i in range(len(arr) - 1):
-        # print('kek', list(arr[i]))
-        # print('kek', arr[i])
         if arr[i] != [0] and show_local(arr[i], loc=loc) != '()':
             ans += show_local(arr[i], loc=loc) + '*' + glob +'^' + str(step_x) + ' + '
         step_x -= 1
