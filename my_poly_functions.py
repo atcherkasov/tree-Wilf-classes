@@ -1,12 +1,12 @@
-def show_y(arr: list) -> list:
+def show_local(arr: list, loc='y') -> list:
     step_y = len(arr) - 1
     ans = "("
     for j in range(len(arr) - 1):
         if arr[j] != 0:
             if arr[j] != 1:
-                ans += str(arr[j]) + '*y^' + str(step_y) + ' + '
+                ans += str(arr[j]) + '*' + loc + '^' + str(step_y) + ' + '
             else:
-                ans += 'y^' + str(step_y) + ' + '
+                ans += loc + '^' + str(step_y) + ' + '
         step_y -= 1
     if arr[-1] != 0:
         ans += str(arr[-1])
@@ -15,16 +15,16 @@ def show_y(arr: list) -> list:
     return ans + ')'
 
 
-def show(arr: list) -> list:
+def show_global(arr: list, glob='x', loc='y') -> list:
     step_x = len(arr) - 1
     ans = ""
     for i in range(len(arr) - 1):
-        if list(arr[i]) != [0] and show_y(arr[i]) != '()':
-            ans += show_y(arr[i]) + '*x^' + str(step_x) + ' + '
+        if arr[i] != [0] and show_local(arr[i], loc=loc) != '()':
+            ans += show_local(arr[i], loc=loc) + '*' + glob +'^' + str(step_x) + ' + '
         step_x -= 1
 
-    if list(arr[-1]) != [0] and show_y(arr[-1]) != '()':
-        ans += show_y(arr[-1])
+    if list(arr[-1]) != [0] and show_local(arr[-1], loc=loc) != '()':
+        ans += show_local(arr[-1], loc=loc)
     elif ans and ans[-2] == '+':
         ans = ans[:-2]
     return ans
@@ -38,7 +38,12 @@ def add_y(a: list, b: list) -> list:
     for i in range(len(b) - 1, -1, -1):
         ans[ind] += b[i]
         ind -= 1
-    return ans
+    i = 0
+    while i < len(ans) and ans[i] == 0:
+        i += 1
+    if i == len(ans):
+        return [0]
+    return ans[i:]
 
 
 def add(a: list, b: list) -> list:
@@ -83,6 +88,12 @@ def mult(a: list, b: list, size: int) -> list:
         for j in range(len(b)):
             if (len(a) + len(b) - 1) - size <= i + j:
                 ans[i + j] = add_y(ans[i + j], mult_y(a[i], b[j]))
+    i = 0
+    while i < len(ans) and ans[i] == [0]:
+        i += 1
+    if i == len(ans):
+        return [[0]]
+    ans = ans[i:]
     return ans[-size:]
 
 
