@@ -2,7 +2,7 @@ from parsers import parser
 import parallel_setup
 
 
-def equations_to_series(equations: list, n: int, xy_equation=True):
+def equations_to_series(equations: list, n: int, y_pow: int, xy_equation=True):
     """
     метод принимает на вход массив уравнений одной системы и желаемую длину ряда
     метод возвращает разложение функции F(x, y) в ряд по x
@@ -24,7 +24,7 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
             arguments.append([variable[equations[j - 1][1]],
                               variable[equations[j - 1][2]],
                               variable[equations[j - 1][3]],
-                              variable[equations[j - 1][4]], n])
+                              variable[equations[j - 1][4]], n, y_pow])
         result = parallel_setup.pool.map(make_equation, arguments)
 
         for j in range(len(variable) - 1):
@@ -34,7 +34,7 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
         variable[0] = f
 
     new_a = make_equation([variable[equations[0][1]], variable[equations[0][2]],
-                           variable[equations[0][3]], variable[equations[0][4]], n + 1],
+                           variable[equations[0][3]], variable[equations[0][4]], n + 1, y_pow],
                           xy_equation)
     a = new_a
     f = add(x, a)
@@ -42,14 +42,14 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
     return cut_f
 
 
-def combo_equations_to_series(equations: list, n: int):
+def combo_equations_to_series(equations: list, x_len: int, y_len: int):
     """
     этот метод нужен для получения функции разложения G(x) в ряд
     он просто вызывает метод equations_to_series;
     получает из F(x, y) G(x);
     и возвражает ОБА разложения в ряд;
     """
-    xy_series = equations_to_series(equations, n)
+    xy_series = equations_to_series(equations, x_len, y_len)
     x_series = []
     for poly in xy_series:
         x_series.append([poly[-1]])
@@ -72,33 +72,34 @@ if __name__ == '__main__':
     parallel_setup.init()
 
     start = time.time()
-    groups, leaf_number = parser('input_files/short_equations_10.txt')
+    groups, leaf_number = parser('input_files/short_equations_8.txt')
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    n = 13  # длина ряда!!!
+    x_len = 33  # длина ряда!!!
+    y_len = 20
     test_mode = True  # тестовый режим активирован?
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     if test_mode:
         file = open(
-            'rubbish_files/short_nice_series_' + leaf_number + '_' + str(n) + '.txt',
+            'rubbish_files/short_nice_series_' + leaf_number + '_' + str(x_len) + '_' + str(y_len) + '.txt',
             'w')
         loges_file = open(
-            'rubbish_files/test_short_time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
+            'rubbish_files/test_short_time_per_percents_' + leaf_number + '_' + str(x_len) + '_' + str(y_len) + '.txt',
             'w')
     else:
         file = open(
-            'output_files/short_nice_series_' + leaf_number + '_' + str(n) + '.txt',
+            'output_files/short_nice_series_' + leaf_number + '_' + str(x_len) + '_' + str(y_len) + '.txt',
             'w')
         loges_file = open(
-            'loges/short_time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
+            'loges/short_time_per_percents_' + leaf_number + '_' + str(x_len) + '_' + str(y_len) + '.txt',
             'w')
     size = len(groups)
 
     part = 5
     part_time = part
     for i in range(size):
-        x_series, xy_series = combo_equations_to_series(groups[i][1:], (n + 1) // 2)
+        x_series, xy_series = combo_equations_to_series(groups[i][1:], (x_len + 1) // 2, y_len)
         print(groups[i][0][:-1], file=file)
         print(show_global(x_series), file=file)
         print(show_global(xy_series) + '\n', file=file)
@@ -112,7 +113,7 @@ if __name__ == '__main__':
         # print(show(seriesXY) + '\n', file=file)
         # 16 sec 
         """
-        percent = round(i / float(size) * 100, 3)
+        percent = round(i / float(size) * 100, 1)
         if percent >= part_time:
             print('посчитанно', str(percent) + '%. За',
                   beautiful_time(time.time() - start), file=loges_file)
@@ -124,7 +125,7 @@ if __name__ == '__main__':
             print(percent, '%')
     file.close()
 
-    print('                заняло ' + beautiful_time(time.time() - start),
+    print(' ВЕСЬ ПРОЦЕСС ЗАНЯЛ: ' + beautiful_time(time.time() - start),
           file=loges_file)
     print('заняло ' + beautiful_time(time.time() - start))
     loges_file.close()
