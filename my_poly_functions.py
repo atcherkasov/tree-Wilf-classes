@@ -57,12 +57,12 @@ def add(a: list, b: list) -> list:
     return ans
 
 
-def mult_y(a: list, b: list) -> list:
-    ans = [0] * (len(a) + len(b) - 1)
-    for i in range(len(a)):
-        # хотим вычислить коэффициент при x^((len(a) + len(b) - 1) - i)
-        for j in range(len(b)):
-            ans[i + j] += a[i] * b[j]
+def mult_y(a: list, b: list, max_pow) -> list:
+    ans = [0] * min((len(a) + len(b) - 1), max_pow + 1)
+    for i in range(min(len(a), max_pow + 1)):
+        # хотим вычислить коэффициент при y^((len(a) + len(b) - 1) - i)
+        for j in range(min(max_pow - i + 1, len(b))):
+            ans[len(ans) - i - j - 1] += a[len(a) - i - 1] * b[len(b) - j - 1]
     i = 0
     while i < len(ans) and ans[i] == 0:
         i += 1
@@ -71,7 +71,7 @@ def mult_y(a: list, b: list) -> list:
     return ans[i:]
 
 
-def mult(a: list, b: list, size: int) -> list:
+def mult(a: list, b: list, x_size: int, y_pow: int) -> list:
     """
     вычисляет произведение двух мнгочленов от двух переменных
     :param a:
@@ -86,37 +86,43 @@ def mult(a: list, b: list, size: int) -> list:
     for i in range(len(a)):
         # хотим вычислить коэффициент при x^((len(a) + len(b) - 1) - i)
         for j in range(len(b)):
-            if (len(a) + len(b) - 1) - size <= i + j:
-                ans[i + j] = add_y(ans[i + j], mult_y(a[i], b[j]))
+            if (len(a) + len(b) - 1) - x_size <= i + j:
+                ans[i + j] = add_y(ans[i + j], mult_y(a[i], b[j], y_pow))
     i = 0
     while i < len(ans) and ans[i] == [0]:
         i += 1
     if i == len(ans):
         return [[0]]
     ans = ans[i:]
-    return ans[-size:]
+    return ans[-x_size:]
 
 
 def make_equation(arr, xy_equation=True):
-    a, b, c, d, series_size = arr
+    a, b, c, d, x_size, y_pow = arr
     x = [[1], [0]]
     y = [[1, 0]]
     minus_one = [[-1]]
     if (xy_equation):
         return mult(x,
-                    add(mult(a, b, 2 * series_size + 1),
+                    add(mult(a, b, 2 * x_size + 1, y_pow),
                         mult(mult(add(y, minus_one),
                                   c,
-                                  2 * series_size + 1),
+                                  2 * x_size + 1,
+                                  y_pow),
                              d,
-                             2 * series_size + 1)),
-                    2 * series_size + 1)[-2 * series_size + 1:]
+                             2 * x_size + 1,
+                             y_pow)),
+                    2 * x_size + 1,
+                    y_pow)[-2 * x_size + 1:]
     else:
         return mult(x,
-                    add(mult(a, b, 2 * series_size + 1),
+                    add(mult(a, b, 2 * x_size + 1, y_pow),
                         mult(mult(minus_one,
                                   c,
-                                  2 * series_size + 1),
+                                  2 * x_size + 1,
+                                  y_pow),
                              d,
-                             2 * series_size + 1)),
-                    2 * series_size + 1)[-2 * series_size + 1:]
+                             2 * x_size + 1,
+                             y_pow)),
+                    2 * x_size + 1,
+                    y_pow)[-2 * x_size + 1:]
