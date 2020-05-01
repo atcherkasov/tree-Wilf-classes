@@ -59,14 +59,19 @@ def add(a: list, b: list) -> list:
 
 def mult_y(a: list, b: list, max_pow) -> list:
     ans = [0] * min((len(a) + len(b) - 1), max_pow + 1)
-    for i in range(min(len(a), max_pow + 1)):
+    iterat_1 = min(len(a), max_pow + 1)
+    ans_len = len(ans)
+    a_len = len(a)
+    b_len = len(b)
+    for i in range(iterat_1):
         # хотим вычислить коэффициент при y^((len(a) + len(b) - 1) - i)
-        for j in range(min(max_pow - i + 1, len(b))):
-            ans[len(ans) - i - j - 1] += a[len(a) - i - 1] * b[len(b) - j - 1]
+        iterat_2 = min(max_pow - i + 1, len(b))
+        for j in range(iterat_2):
+            ans[ans_len - i - j - 1] += a[a_len - i - 1] * b[b_len - j - 1]
     i = 0
-    while i < len(ans) and ans[i] == 0:
+    while i < ans_len and ans[i] == 0:
         i += 1
-    if i == len(ans):
+    if i == ans_len:
         return [0]
     return ans[i:]
 
