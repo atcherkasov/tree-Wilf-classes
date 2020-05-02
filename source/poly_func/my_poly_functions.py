@@ -30,7 +30,7 @@ def show_global(arr: list, glob='x', loc='y') -> list:
     return ans
 
 
-def add_y(a: list, b: list) -> list:
+def add_local(a: list, b: list) -> list:
     if len(a) < len(b):
         a, b = b, a
     ans = a[::]
@@ -46,15 +46,91 @@ def add_y(a: list, b: list) -> list:
     return ans[i:]
 
 
-def add(a: list, b: list) -> list:
+def add_global(a: list, b: list) -> list:
     if len(a) < len(b):
         a, b = b, a
     ans = a[::]
     ind = len(ans) - 1
     for i in range(len(b) - 1, -1, -1):
-        ans[ind] = add_y(ans[ind], b[i])
+        ans[ind] = add_local(ans[ind], b[i])
         ind -= 1
     return ans
+
+
+def mult_local(a: list, b: list, max_pow) -> list:
+    ans = [0] * min((len(a) + len(b) - 1), max_pow + 1)
+    iterat_1 = min(len(a), max_pow + 1)
+    ans_len = len(ans)
+    a_len = len(a)
+    b_len = len(b)
+    for i in range(iterat_1):
+        # хотим вычислить коэффициент при y^((len(a) + len(b) - 1) - i)
+        iterat_2 = min(max_pow - i + 1, len(b))
+        for j in range(iterat_2):
+            ans[ans_len - i - j - 1] += a[a_len - i - 1] * b[b_len - j - 1]
+    i = 0
+    while i < ans_len and ans[i] == 0:
+        i += 1
+    if i == ans_len:
+        return [0]
+    return ans[i:]
+
+
+def mult_global(a: list, b: list, x_size: int, y_pow: int) -> list:
+    """
+    вычисляет произведение двух мнгочленов от двух переменных
+    :param a:
+    :param b:
+    :param size: размер по которому я 'обрезаю' многочлен.
+                 Нужно для того, чтобы все степени многочлена
+                 по х не превосходили заданного значение
+                 (оно как раз и задаётся через size)
+    :return:
+    """
+    ans = [[0]] * (len(a) + len(b) - 1)
+    for i in range(len(a)):
+        # хотим вычислить коэффициент при x^((len(a) + len(b) - 1) - i)
+        for j in range(len(b)):
+            if (len(a) + len(b) - 1) - x_size <= i + j:
+                ans[i + j] = add_local(ans[i + j], mult_local(a[i], b[j], y_pow))
+    i = 0
+    while i < len(ans) and ans[i] == [0]:
+        i += 1
+    if i == len(ans):
+        return [[0]]
+    ans = ans[i:]
+    return ans[-x_size:]
+
+
+def make_equation(arr, xy_equation=True):
+    a, b, c, d, x_size, y_pow = arr
+    x = [[1], [0]]
+    y = [[1, 0]]
+    minus_one = [[-1]]
+    if (xy_equation):
+        return mult_global(x,
+                           add_global(mult_global(a, b, 2 * x_size + 1, y_pow),
+                                      mult_global(mult_global(add_global(y, minus_one),
+                                                              c,
+                                                              2 * x_size + 1,
+                                                              y_pow),
+                                           d,
+                                           2 * x_size + 1,
+                                           y_pow)),
+                           2 * x_size + 1,
+                           y_pow)[-2 * x_size + 1:]
+    else:
+        return mult_global(x,
+                           add_global(mult_global(a, b, 2 * x_size + 1, y_pow),
+                                      mult_global(mult_global(minus_one,
+                                                       c,
+                                                       2 * x_size + 1,
+                                                       y_pow),
+                                           d,
+                                           2 * x_size + 1,
+                                           y_pow)),
+                           2 * x_size + 1,
+                           y_pow)[-2 * x_size + 1:]
 
 
 def mult_y(a: list, b: list, max_pow) -> list:
@@ -109,8 +185,8 @@ def make_equation(arr, xy_equation=True):
     minus_one = [[-1]]
     if (xy_equation):
         return mult(x,
-                    add(mult(a, b, 2 * x_size + 1, y_pow),
-                        mult(mult(add(y, minus_one),
+                    add_global(mult(a, b, 2 * x_size + 1, y_pow),
+                        mult(mult(add_global(y, minus_one),
                                   c,
                                   2 * x_size + 1,
                                   y_pow),
@@ -121,7 +197,7 @@ def make_equation(arr, xy_equation=True):
                     y_pow)[-2 * x_size + 1:]
     else:
         return mult(x,
-                    add(mult(a, b, 2 * x_size + 1, y_pow),
+                    add_global(mult(a, b, 2 * x_size + 1, y_pow),
                         mult(mult(minus_one,
                                   c,
                                   2 * x_size + 1,
