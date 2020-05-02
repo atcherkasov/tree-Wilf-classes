@@ -1,5 +1,5 @@
-from parsers import parser
-import parallel_setup
+from source.parsers import parser
+from source import parallel_setup
 
 
 def equations_to_series(equations: list, n: int, xy_equation=True):
@@ -7,7 +7,7 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
     метод принимает на вход массив уравнений одной системы и желаемую длину ряда
     метод возвращает разложение функции F(x, y) в ряд по x
     """
-    from my_poly_functions import add, make_equation
+    from source.my_poly_functions import add, make_equation
 
     x = [[1], [0]]
 
@@ -66,13 +66,13 @@ def beautiful_time(all_time):
 
 
 if __name__ == '__main__':
-    from my_poly_functions import show_global
+    from source.my_poly_functions import show_global
     import time
 
     parallel_setup.init()
 
     start = time.time()
-    groups, leaf_number = parser('input_files/short_equations_10.txt')
+    groups, leaf_number = parser('input_files/equations_short_10.txt')
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     n = 13  # длина ряда!!!
@@ -81,17 +81,17 @@ if __name__ == '__main__':
 
     if test_mode:
         file = open(
-            'rubbish_files/short_nice_series_' + leaf_number + '_' + str(n) + '.txt',
+            'rubbish_files/short_series_' + leaf_number + '_' + str(n) + '.txt',
             'w')
         loges_file = open(
-            'rubbish_files/test_short_time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
+            'rubbish_files/log_short_' + leaf_number + '_' + str(n) + '.txt',
             'w')
     else:
         file = open(
-            'output_files/short_nice_series_' + leaf_number + '_' + str(n) + '.txt',
+            'output_files/short_series_' + leaf_number + '_' + str(n) + '.txt',
             'w')
         loges_file = open(
-            'loges/short_time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
+            'loges/log_short_' + leaf_number + '_' + str(n) + '.txt',
             'w')
     size = len(groups)
 
