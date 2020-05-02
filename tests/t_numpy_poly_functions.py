@@ -1,5 +1,5 @@
 import numpy as np
-from numpy_poly_functions import show_y, show, mult, add
+from source.numpy_poly_functions import show_y, show, mult, add
 
 # тест функции show_y
 assert show_y(np.poly1d([2, 1, 3])) == '(2*y^2 + y^1 + 3)'

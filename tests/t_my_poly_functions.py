@@ -1,5 +1,5 @@
 # coding=utf8
-from my_poly_functions import show_local, show_global, mult_y, mult, add_y, add
+from source.my_poly_functions import show_local, show_global, mult_y, mult, add_y, add
 
 
 # тест функции show_local
