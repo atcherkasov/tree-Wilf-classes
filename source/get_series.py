@@ -25,7 +25,11 @@ def equations_to_series(equations: list, n: int, xy_equation=True):
                               variable[equations[j - 1][2]],
                               variable[equations[j - 1][3]],
                               variable[equations[j - 1][4]], n])
-        result = parallel_setup.pool.map(make_equation, arguments)
+        # result = parallel_setup.pool.map(make_equation, arguments)
+        result = []
+
+        for arg in arguments:
+            result.append(make_equation(arg))
 
         for j in range(len(variable) - 1):
             variable[j + 1] = result[j]
@@ -65,11 +69,38 @@ def beautiful_time(all_time):
         seconds) + ' секунд.'
 
 
+def write(arr):
+    n, i = arr
+    # todo что делать с ассинхронным выводом в файл?????
+    x_series, xy_series = combo_equations_to_series(parallel_setup.groups[i][1:], (n + 1) // 2)
+    print(parallel_setup.groups[i][0][:-1], file=parallel_setup.file)
+    print(show_global(x_series), file=file)
+    print(show_global(xy_series) + '\n', file=parallel_setup.file)
+    """
+    этот кусок кода в среднем работает за 16 сек, в то врем как кусок кода выше
+    работает за 8 сек (он алгоритмически в два раза быстрее)
+    # seriesXY = equations_to_series(groups[i][1:], 6)
+    # seriesX = equations_to_series(groups[i][1:], 6, False)
+    # print(groups[i][0][:-1], file=file)
+    # print(show(seriesX), file=file)
+    # print(show(seriesXY) + '\n', file=file)
+    # 16 sec 
+    """
+    percent = round(i / float(size) * 100, 3)
+    if percent >= part_time:
+        print('посчитанно', str(percent) + '%. За',
+              beautiful_time(time.time() - start), file=loges_file)
+        print('посчитанно', str(percent) + '%. За',
+              beautiful_time(time.time() - start))
+
+        part_time += part
+    else:
+        print(percent, '%')
+
+
 if __name__ == '__main__':
     from source.my_poly_functions import show_global
     import time
-
-    parallel_setup.init()
 
     start = time.time()
     groups, leaf_number = parser('input_files/equations_short_10.txt')
@@ -97,31 +128,10 @@ if __name__ == '__main__':
 
     part = 5
     part_time = part
-    for i in range(size):
-        x_series, xy_series = combo_equations_to_series(groups[i][1:], (n + 1) // 2)
-        print(groups[i][0][:-1], file=file)
-        print(show_global(x_series), file=file)
-        print(show_global(xy_series) + '\n', file=file)
-        """
-        этот кусок кода в среднем работает за 16 сек, в то врем как кусок кода выше
-        работает за 8 сек (он алгоритмически в два раза быстрее)
-        # seriesXY = equations_to_series(groups[i][1:], 6)
-        # seriesX = equations_to_series(groups[i][1:], 6, False)
-        # print(groups[i][0][:-1], file=file)
-        # print(show(seriesX), file=file)
-        # print(show(seriesXY) + '\n', file=file)
-        # 16 sec 
-        """
-        percent = round(i / float(size) * 100, 3)
-        if percent >= part_time:
-            print('посчитанно', str(percent) + '%. За',
-                  beautiful_time(time.time() - start), file=loges_file)
-            print('посчитанно', str(percent) + '%. За',
-                  beautiful_time(time.time() - start))
+    current = 0
 
-            part_time += part
-        else:
-            print(percent, '%')
+    parallel_setup.init(groups, file, loges_file, current)
+
     file.close()
 
     print('                заняло ' + beautiful_time(time.time() - start),
