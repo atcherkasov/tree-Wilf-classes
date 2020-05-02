@@ -1,6 +1,6 @@
 # coding=utf8
-from parsers import parser
-from get_series import beautiful_time, equations_to_series
+from source.parsers import parser
+from source.get_series import beautiful_time, equations_to_series
 
 
 def decomposition_series_to_y(equations: list, n: int, xy_series=None):
@@ -24,14 +24,14 @@ def decomposition_series_to_y(equations: list, n: int, xy_series=None):
 
 
 if __name__ == '__main__':
-    from my_poly_functions import show_global
+    from source.my_poly_functions import show_global
     import time
-    import parallel_setup
+    from source import parallel_setup
 
     parallel_setup.init()
 
     start = time.time()
-    groups, leaf_number = parser('input_files/short_equations_4.txt')
+    groups, leaf_number = parser('input_files/equations_short_4.txt')
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     n = 33  # длина ряда!!!
