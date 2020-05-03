@@ -1,6 +1,6 @@
 # coding=utf8
 from source.parsers import parser
-from source.get_series import beautiful_time, equations_to_series
+from source.get_series import beautiful_time, equations2series
 
 
 def decomposition_series_to_y(equations: list, n: int, xy_series=None):
@@ -8,7 +8,7 @@ def decomposition_series_to_y(equations: list, n: int, xy_series=None):
 
     """
     if xy_series == None:
-        xy_series = equations_to_series(equations, n)
+        xy_series = equations2series(equations, n)
     max_pow = max([len(poly) for poly in xy_series]) - 1   # максимальная степень при y
     yx_series = []
     for pow in range(max_pow, -1, -1):
@@ -24,7 +24,7 @@ def decomposition_series_to_y(equations: list, n: int, xy_series=None):
 
 
 if __name__ == '__main__':
-    from source.my_poly_functions import show_global
+    from source.poly_func.my_poly_functions import show_global
     import time
     from source import parallel_setup
 
