@@ -2,17 +2,17 @@ from source.parsers import parser
 from source import parallel_setup
 
 
-def equations_to_series(equations: list, n: int, y_pow: int, xy_equation=True):
+def equations2series(equations: list, n: int, xy_equation=True):
     """
     метод принимает на вход массив уравнений одной системы и желаемую длину ряда
     метод возвращает разложение функции F(x, y) в ряд по x
     """
-    from source.my_poly_functions import add, make_equation
+    from source.poly_func.my_poly_functions import add_global, make_equation
 
     x = [[1], [0]]
 
     variable = {}
-    f = add(x, [[0]])
+    f = add_global(x, [[0]])
     variable[0] = f
 
     for i in range(len(equations)):
@@ -24,32 +24,76 @@ def equations_to_series(equations: list, n: int, y_pow: int, xy_equation=True):
             arguments.append([variable[equations[j - 1][1]],
                               variable[equations[j - 1][2]],
                               variable[equations[j - 1][3]],
-                              variable[equations[j - 1][4]], n, y_pow])
+                              variable[equations[j - 1][4]], n])
         result = parallel_setup.pool.map(make_equation, arguments)
 
         for j in range(len(variable) - 1):
             variable[j + 1] = result[j]
 
-        f = add(x, variable[1])
+        f = add_global(x, variable[1])
         variable[0] = f
 
     new_a = make_equation([variable[equations[0][1]], variable[equations[0][2]],
-                           variable[equations[0][3]], variable[equations[0][4]], n + 1, y_pow],
+                           variable[equations[0][3]], variable[equations[0][4]], n + 1],
                           xy_equation)
     a = new_a
-    f = add(x, a)
+    f = add_global(x, a)
     cut_f = f[(-2 * n):]
     return cut_f
 
 
-def combo_equations_to_series(equations: list, x_len: int, y_len: int):
+def equations2series_y(equations: list, n: int, y_pow: int, xy_equation=True):
+    """
+    метод принимает на вход массив уравнений одной системы и желаемую длину ряда
+    метод возвращает разложение функции F(x, y) в ряд по x
+    """
+    from source.poly_func.my_poly_functions import add_global, make_equation_cut
+
+    x = [[1], [0]]
+
+    variable = {}
+    f = add_global(x, [[0]])
+    variable[0] = f
+
+    for i in range(len(equations)):
+        variable[equations[i][0]] = [[0]]
+    for i in range(1, n - 1):
+        arguments = []
+        for j in range(1, len(variable)):
+            arguments.append([variable[equations[j - 1][1]],
+                              variable[equations[j - 1][2]],
+                              variable[equations[j - 1][3]],
+                              variable[equations[j - 1][4]], n, y_pow])
+        result = parallel_setup.pool.map(make_equation_cut, arguments)
+
+        for j in range(len(variable) - 1):
+            variable[j + 1] = result[j]
+
+        f = add_global(x, variable[1])
+        variable[0] = f
+
+    new_a = make_equation_cut([variable[equations[0][1]], variable[equations[0][2]],
+                           variable[equations[0][3]], variable[equations[0][4]], n + 1, y_pow],
+                          xy_equation)
+    a = new_a
+    f = add_global(x, a)
+    cut_f = f[(-2 * n):]
+    return cut_f
+
+
+def combo_equations_to_series(equations: list, args: list):
     """
     этот метод нужен для получения функции разложения G(x) в ряд
     он просто вызывает метод equations_to_series;
     получает из F(x, y) G(x);
     и возвражает ОБА разложения в ряд;
     """
-    xy_series = equations_to_series(equations, x_len, y_len)
+    if len(args) == 1:
+        xy_series = equations2series(equations, args[0])
+    elif len(args) == 2:
+        xy_series = equations2series_y(equations, args[0], args[1])
+    else:
+        print('ERROR')
     x_series = []
     for poly in xy_series:
         x_series.append([poly[-1]])
@@ -66,40 +110,40 @@ def beautiful_time(all_time):
 
 
 if __name__ == '__main__':
-    from source.my_poly_functions import show_global
+    from source.poly_func.my_poly_functions import show_global
     import time
 
     parallel_setup.init()
 
     start = time.time()
-    groups, leaf_number = parser('input_files/short_equations_8.txt')
+    groups, leaf_number = parser('input_files/equations_short_9.txt')
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    x_len = 33  # длина ряда!!!
-    y_len = 20
-    test_mode = True  # тестовый режим активирован?
+    x_len = 65  # длина ряда!!!
+    y_len = 3
+    test_mode = False  # тестовый режим активирован?
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     if test_mode:
         file = open(
-            'rubbish_files/short_nice_series_' + leaf_number + '_' + str(n) + '.txt',
+            'rubbish_files/short_nice_series_' + leaf_number + '_' + str(x_len) + '_' + str(y_len) + '.txt',
             'w')
         loges_file = open(
-            'rubbish_files/test_short_time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
+            'rubbish_files/log_short_' + leaf_number + '_' + str(x_len) + '_' + str(y_len) + '.txt',
             'w')
     else:
         file = open(
-            'output_files/short_nice_series_' + leaf_number + '_' + str(n) + '.txt',
+            'output_files/series_short_' + leaf_number + '_' + str(x_len) + '_' + str(y_len) + '.txt',
             'w')
         loges_file = open(
-            'loges/short_time_per_percents_' + leaf_number + '_' + str(n) + '.txt',
+            'loges/log_short_' + leaf_number + '_' + str(x_len) + '_' + str(y_len) + '.txt',
             'w')
     size = len(groups)
 
     part = 5
     part_time = part
     for i in range(size):
-        x_series, xy_series = combo_equations_to_series(groups[i][1:], (x_len + 1) // 2, y_len)
+        x_series, xy_series = combo_equations_to_series(groups[i][1:], [(x_len + 1) // 2, y_len])
         print(groups[i][0][:-1], file=file)
         print(show_global(x_series), file=file)
         print(show_global(xy_series) + '\n', file=file)
