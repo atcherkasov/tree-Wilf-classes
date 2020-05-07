@@ -116,11 +116,11 @@ if __name__ == '__main__':
     parallel_setup.init()
 
     start = time.time()
-    groups, leaf_number = parser('input_files/equations_short_9.txt')
+    groups, leaf_number = parser('input_files/equations_short_10.txt')
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    x_len = 65  # длина ряда!!!
-    y_len = 3
+    x_len = 151  # длина ряда!!!
+    y_len = 2
     test_mode = False  # тестовый режим активирован?
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -140,7 +140,7 @@ if __name__ == '__main__':
             'w')
     size = len(groups)
 
-    part = 5
+    part = 2.5
     part_time = part
     for i in range(size):
         x_series, xy_series = combo_equations_to_series(groups[i][1:], [(x_len + 1) // 2, y_len])
