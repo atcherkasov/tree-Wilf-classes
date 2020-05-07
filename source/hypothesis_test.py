@@ -78,11 +78,13 @@ def hyp_test(series_file_path='output_files/series_9_73.txt', meta_mode=True):
 
     G_groups = create_group(G)
     F_groups = create_group(F)
+    print(len(G_groups))
+    print(len(F_groups))
 
     if meta_mode:
-        groups_info(G_groups, 'G')
+        # groups_info(G_groups, 'G')
         print("\n\n\n\n\n\n\n")
-        groups_info(F_groups, 'F')
+        # groups_info(F_groups, 'F')
 
     # проверка правильности гипотезы
     if len(G_groups) != len(F_groups):
@@ -98,5 +100,5 @@ def hyp_test(series_file_path='output_files/series_9_73.txt', meta_mode=True):
 
 
 if __name__ == '__main__':
-    # hyp_test('output_files/nice_series_9_101.txt')
-    hyp_test('rubbish_files/short_nice_series_10_13.txt')
+    hyp_test('output_files/series_short_10_151.txt')
+    # hyp_test('rubbish_files/short_nice_series_10_13.txt')
