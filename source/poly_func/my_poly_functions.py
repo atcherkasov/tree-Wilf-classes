@@ -158,7 +158,7 @@ def mult(a: list, b: list, size: int) -> list:
                  (оно как раз и задаётся через size)
     :return:
     """
-    ans = [[0]] * (len(a) + len(b) - 1)
+    ans = [[0] for i in range((len(a) + len(b) - 1))]
     for i in range(len(a)):
         # хотим вычислить коэффициент при x^((len(a) + len(b) - 1) - i)
         for j in range(len(b)):
