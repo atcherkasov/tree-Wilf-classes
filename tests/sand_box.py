@@ -2,8 +2,14 @@
 from source.poly_func.my_poly_functions import show_global, make_equation_cut, make_equation
 from source import parallel_setup
 
-sum_x = 0.0
-sum_y = 0.0
+cycle_x = 0.0
+cycle_y = 0.0
+
+res_x = 0.0
+res_y = 0.0
+
+rem_x = 0.0
+rem_y = 0.0
 
 
 def equations2series(equations: list, n: int, xy_equation=True):
@@ -11,7 +17,7 @@ def equations2series(equations: list, n: int, xy_equation=True):
     метод принимает на вход массив уравнений одной системы и желаемую длину ряда
     метод возвращает разложение функции F(x, y) в ряд по x
     """
-    global sum_x
+    global cycle_x, res_x, rem_x
     from source.poly_func.my_poly_functions import add_global, make_equation
     from time import time
 
@@ -36,28 +42,33 @@ def equations2series(equations: list, n: int, xy_equation=True):
         s3 = time()
 
         # print('prepare x:', s3 - s2, 'размер:', len(arguments))
-        # sum_x += s3 - s2
+        cycle_x += s3 - s2
         # print(arguments)
         result = parallel_setup.pool.map(make_equation, arguments)
         s4 = time()
-        print('result x:', s4 - s3)
-        sum_x += s4 - s3
+        # print('result x:', s4 - s3)
+        res_x += s4 - s3
 
-
+        s5 = time()
         for j in range(len(variable) - 1):
             variable[j + 1] = result[j]
 
         f = add_global(x, variable[1])
         variable[0] = f
+        s6 = time()
+        rem_x += s6 - s5
 
     new_a = make_equation([variable[equations[0][1]], variable[equations[0][2]],
                            variable[equations[0][3]], variable[equations[0][4]], n + 1],
                           xy_equation)
-    print('цикл x занял:', time() - s1)
+    # print('цикл x занял:', time() - s1)
     a = new_a
     f = add_global(x, a)
     cut_f = f[(-2 * n):]
-    print('\nsum_x:', sum_x)
+    # print('\ncycle_x:', cycle_x)
+    # print('\nres_x:', res_x)
+    # print('\nrem_x:', rem_x)
+
     return cut_f
 
 
@@ -68,7 +79,7 @@ def equations2series_y(equations: list, n: int, y_pow: int, xy_equation=True):
     """
     from source.poly_func.my_poly_functions import add_global, make_equation_cut
     from time import time
-    global sum_y
+    global cycle_y, res_y, rem_y
 
     x = [[1], [0]]
 
@@ -88,28 +99,33 @@ def equations2series_y(equations: list, n: int, y_pow: int, xy_equation=True):
                               variable[equations[j - 1][3]],
                               variable[equations[j - 1][4]], n, y_pow])
         s3 = time()
-        # sum_y += s3 - s2
+        cycle_y += s3 - s2
         # print('prepare y:', s3 - s2, 'размер:', len(arguments))
         # print(arguments)
         result = parallel_setup.pool.map(make_equation_cut, arguments)
         s4 = time()
-        print('result y:', s4 - s3)
-        sum_y += s4 - s3
+        # print('result y:', s4 - s3)
+        res_y += s4 - s3
 
+        s5 = time()
         for j in range(len(variable) - 1):
             variable[j + 1] = result[j]
 
         f = add_global(x, variable[1])
         variable[0] = f
+        s6 = time()
+        rem_y += s6 - s5
 
     new_a = make_equation_cut([variable[equations[0][1]], variable[equations[0][2]],
                            variable[equations[0][3]], variable[equations[0][4]], n + 1, y_pow],
                           xy_equation)
-    print('цикл y занял:', time() - s1)
+    # print('цикл y занял:', time() - s1)
     a = new_a
     f = add_global(x, a)
     cut_f = f[(-2 * n):]
-    print('\nsum_y:', sum_y)
+    # print('\ncycle_y:', cycle_y)
+    print('\nres_y:', res_y)
+    # print('\nrem_y:', rem_y)
 
     return cut_f
 
@@ -122,7 +138,7 @@ if __name__ == '__main__':
     arr = [[1, 0, 0, 2, 0],
            [2, 0, 1, 2, 1]]
 
-    n = 65
+    n = 101
 
     parallel_setup.init()
 
