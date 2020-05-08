@@ -100,5 +100,5 @@ def hyp_test(series_file_path='output_files/series_9_73.txt', meta_mode=True):
 
 
 if __name__ == '__main__':
-    hyp_test('output_files/series_short_10_151.txt')
+    hyp_test('output_files/series_short_10_151_2.txt')
     # hyp_test('rubbish_files/short_nice_series_10_13.txt')
