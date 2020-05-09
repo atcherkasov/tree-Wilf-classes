@@ -1,6 +1,5 @@
-def parser(path='input_files/equations_9.txt'):
+def parser(path='input_files/equations_short_9.txt'):
     leaf_number = (path.split('_')[-1]).split('.')[0]
-
     file = open(path, 'r')
 
     groups = []
