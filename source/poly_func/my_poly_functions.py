@@ -133,18 +133,35 @@ def make_equation_cut(arr, xy_equation=True):
                            y_pow)[-2 * x_size + 1:]
 
 
-def mult_y(a: list, b: list) -> list:
-    ans = [0] * (len(a) + len(b) - 1)
-    for i in range(len(a)):
-        # хотим вычислить коэффициент при x^((len(a) + len(b) - 1) - i)
-        for j in range(len(b)):
-            ans[i + j] += a[i] * b[j]
-    i = 0
-    while i < len(ans) and ans[i] == 0:
-        i += 1
-    if i == len(ans):
-        return [0]
-    return ans[i:]
+def mult_y(a: list, b: list, size=-1) -> list:
+    ans = [0 for i in range((len(a) + len(b) - 1))]
+    if size == -1:
+        for i in range(len(a)):
+            # хотим вычислить коэффициент при x^((len(a) + len(b) - 1) - i)
+            for j in range(len(b)):
+                ans[i + j] += a[i] * b[j]
+        i = 0
+        while i < len(ans) and ans[i] == 0:
+            i += 1
+        if i == len(ans):
+            return [0]
+        return ans[i:]
+    else:
+        len_a = len(a)
+        len_b = len(b)
+        for i in range(len(a)):
+            # хотим вычислить коэффициент при x^((len(a) + len(b) - 1) - i)
+            for j in range(len(b)):
+                if (len_a + len_b - 1) - size <= i + j:
+                    ans[i + j] += a[i] * b[j]
+        i = 0
+        while i < len(ans) and ans[i] == [0]:
+            i += 1
+        if i == len(ans):
+            return [[0]]
+        ans = ans[i:]
+        return ans[-size:]
+
 
 
 def mult(a: list, b: list, size: int) -> list:
@@ -159,10 +176,12 @@ def mult(a: list, b: list, size: int) -> list:
     :return:
     """
     ans = [[0] for i in range((len(a) + len(b) - 1))]
+    len_a = len(a)
+    len_b = len(b)
     for i in range(len(a)):
         # хотим вычислить коэффициент при x^((len(a) + len(b) - 1) - i)
         for j in range(len(b)):
-            if (len(a) + len(b) - 1) - size <= i + j:
+            if (len_a + len_b - 1) - size <= i + j:
                 ans[i + j] = add_local(ans[i + j], mult_y(a[i], b[j]))
     i = 0
     while i < len(ans) and ans[i] == [0]:
@@ -196,3 +215,16 @@ def make_equation(arr, xy_equation=True):
                              d,
                              2 * series_size + 1)),
                     2 * series_size + 1)[-2 * series_size + 1:]
+
+
+def x_equation(arr):
+    a, b, c, d, series_size = arr
+    x = [1, 0]
+    minus_one = [-1]
+    # return mult_y(x, add_local(mult_y(a, b), mult_y(minus_one, mult_y(c, d))))
+
+    return mult_y(x,
+                      add_local(mult_y(a, b, size=2 * series_size + 1),
+                                mult_y(minus_one,
+                                mult_y(c, d, size=2 * series_size + 1))),
+                size=2 * series_size + 1)[-2 * series_size + 1:]
