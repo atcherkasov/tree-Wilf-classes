@@ -45,37 +45,51 @@ if __name__ == '__main__':
     from source.parsers import parser
     import time
     from source.get_series import beautiful_time
+    import os
 
     parallel_setup.init()
 
     start = time.time()
-    groups, leaf_number = parser('../input_files/equations_short_9.txt')
+    groups, leaf_number = parser('../input_files/equations_short_8.txt')
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    x_len = 151  # длина ряда!!!
+    x_len = 75  # длина ряда!!!
     test_mode = True  # тестовый режим активирован?
+    start_folg = 0
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     if test_mode:
-        file = open(
-            '../rubbish_files/short_x_' + leaf_number + '_' + str(x_len) + '.txt',
-            'w')
+        try:
+            os.mkdir('../rubbish_files/output_' + leaf_number + '_' + str(x_len))
+        except:
+            pass
+        # os.mkdir('../rubbish_files/log_' + leaf_number + '_' + str(x_len))
         loges_file = open(
-            '../rubbish_files/log_x_' + leaf_number + '_' + str(x_len) + '.txt',
+            '../rubbish_files/log_short_' + leaf_number + '_' + str(x_len) + '.txt',
             'w')
     else:
-        file = open(
-            '../output_files/series_x_' + leaf_number + '_' + str(x_len) + '.txt',
-            'w')
+        try:
+            os.mkdir('../output_files/output_' + leaf_number + '_' + str(x_len))
+        except:
+            pass
+        # os.mkdir('../output_files/log_' + leaf_number + '_' + str(x_len))
         loges_file = open(
-            '../loges/log_x_' + leaf_number + '_' + str(x_len) + '.txt',
+            '../loges/log_short_' + leaf_number + '_' + str(x_len) + '.txt',
             'w')
     size = len(groups)
 
     part = 2.5
     part_time = part
-    for i in range(size):
+    for i in range(start_folg, size):
         x_series = compute_sequence(groups[i][1:], (x_len + 1) // 2)
+        if test_mode:
+            file = open(
+                '../rubbish_files/output_' + leaf_number + '_' + str(x_len) + '/' + str(i) + '.txt',
+                'w')
+        else:
+            file = open(
+                '../output_files/output_' + leaf_number + '_' + str(x_len) + '/' + str(i) + '.txt',
+                'w')
         print(groups[i][0][:-1], file=file)
         print(show_local(x_series, loc='x'), file=file)
 
