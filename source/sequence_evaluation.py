@@ -41,7 +41,7 @@ def compute_sequence(equations: list, n: int):
 
 
 if __name__ == '__main__':
-    from source.poly_func.my_poly_functions import show_global
+    from source.poly_func.my_poly_functions import show_local
     from source.parsers import parser
     import time
     from source.get_series import beautiful_time
@@ -49,26 +49,26 @@ if __name__ == '__main__':
     parallel_setup.init()
 
     start = time.time()
-    groups, leaf_number = parser('input_files/equations_short_8.txt')
+    groups, leaf_number = parser('../input_files/equations_short_9.txt')
 
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     x_len = 151  # длина ряда!!!
-    test_mode = False  # тестовый режим активирован?
+    test_mode = True  # тестовый режим активирован?
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     if test_mode:
         file = open(
-            'rubbish_files/short_nice_series_' + leaf_number + '_' + str(x_len) + '.txt',
+            '../rubbish_files/short_x_' + leaf_number + '_' + str(x_len) + '.txt',
             'w')
         loges_file = open(
-            'rubbish_files/log_short_' + leaf_number + '_' + str(x_len) + '.txt',
+            '../rubbish_files/log_x_' + leaf_number + '_' + str(x_len) + '.txt',
             'w')
     else:
         file = open(
-            'output_files/series_short_' + leaf_number + '_' + str(x_len) + '.txt',
+            '../output_files/series_x_' + leaf_number + '_' + str(x_len) + '.txt',
             'w')
         loges_file = open(
-            'loges/log_short_' + leaf_number + '_' + str(x_len) + '.txt',
+            '../loges/log_x_' + leaf_number + '_' + str(x_len) + '.txt',
             'w')
     size = len(groups)
 
@@ -77,7 +77,7 @@ if __name__ == '__main__':
     for i in range(size):
         x_series = compute_sequence(groups[i][1:], (x_len + 1) // 2)
         print(groups[i][0][:-1], file=file)
-        print(show_global(x_series), file=file)
+        print(show_local(x_series, loc='x'), file=file)
 
         percent = round(i / float(size) * 100, 1)
         if percent >= part_time:
