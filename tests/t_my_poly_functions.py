@@ -1,6 +1,6 @@
 # coding=utf8
 from source.poly_func.my_poly_functions import show_local, show_global, mult_local, mult_global, \
-    add_local, add_global
+    add_local, add_global, mult_y
 
 
 # тест функции show_local
@@ -44,6 +44,7 @@ print('add PASSED!\n')
 a1 = [3, 2, 1]
 b1 = [1, 1]
 assert mult_local(a1, b1, 10) == [3, 5, 3, 1]
+
 a1 = [0, 0, 3, 2, 1]
 b1 = [0, 1, 1]
 assert mult_local(a1, b1, 10) == [3, 5, 3, 1]
@@ -56,7 +57,23 @@ assert mult_local(a1, b1, 0) == [6]
 assert mult_local(a1, b1, 5) == [15, 21, 42, 33, 27, 6]
 assert mult_local(a1, b1, 4) == [21, 42, 33, 27, 6]
 
+print('mylt_local PASSED!\n')
+
+# тест функции mult_y
+a1 = [3, 2, 1]
+b1 = [1, 1]
+assert mult_y(a1, b1) == [3, 5, 3, 1]
+
+a1 = [0, 0, 3, 2, 1]
+b1 = [0, 1, 1]
+assert mult_y(a1, b1) == [3, 5, 3, 1]
+
+a1 = [5, 2, 7, 2]
+b1 = [3, 3, 3]
+assert mult_y(a1, b1) == [15, 21, 42, 33, 27, 6]
+
 print('mylt_y PASSED!\n')
+
 
 # тест функции mult_global
 a = [[2, 3, 1], [2, 1], [1, 0], [3, 1]]
@@ -84,6 +101,6 @@ assert mult_global(a, b, 3, 2) == [[9, 11, 3], [7, 7, 1], [12, 13, 3]]
 assert mult_global(a, b, 3, 1) == [[11, 3], [7, 1], [13, 3]]
 
 
-print('mult PASSED!\n')
+print('mult_global PASSED!\n')
 
 print('ALL TESTS PASSED!')

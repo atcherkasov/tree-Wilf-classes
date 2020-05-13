@@ -1,20 +1,15 @@
 from source.parsers import parser
 from source import parallel_setup
 from source.get_series import equations2series_y, equations2series, combo_equations_to_series
+from source.sequence_evaluation import compute_sequence
 
-
-from source.poly_func.my_poly_functions import show_global
+from source.poly_func.my_poly_functions import show_global, show_local
 import time
 
 parallel_setup.init()
 
 start = time.time()
 groups, leaf_number = parser('../input_files/long_data/equations_4.txt')
-
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-x_len = 33  # длина ряда!!!
-test_mode = False  # тестовый режим активирован?
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
 correct_answers = [['(853467)*x^33 + (310572)*x^31 + (113634)*x^29 + (41835)*x^27 + (15511)*x^25 + (5798)*x^23 + (2188)*x^21 + (835)*x^19 + (323)*x^17 + (127)*x^15 + (51)*x^13 + (21)*x^11 + (9)*x^9 + (4)*x^7 + (2)*x^5 + (1)*x^3 + (1)*x^1 ',
@@ -28,10 +23,20 @@ correct_answers = [['(853467)*x^33 + (310572)*x^31 + (113634)*x^29 + (41835)*x^2
                     ['(853467)*x^33 + (310572)*x^31 + (113634)*x^29 + (41835)*x^27 + (15511)*x^25 + (5798)*x^23 + (2188)*x^21 + (835)*x^19 + (323)*x^17 + (127)*x^15 + (51)*x^13 + (21)*x^11 + (9)*x^9 + (4)*x^7 + (2)*x^5 + (1)*x^3 + (1)*x^1 ',
                      '(y^14 + 16*y^13 + 224*y^12 + 2000*y^11 + 13700*y^10 + 71568*y^9 + 293188*y^8 + 946192*y^7 + 2407990*y^6 + 4794608*y^5 + 7344116*y^4 + 8392176*y^3 + 6772584*y^2 + 3465840*y^1 + 853467)*x^33 + (y^13 + 15*y^12 + 195*y^11 + 1610*y^10 + 10115*y^9 + 48048*y^8 + 176995*y^7 + 506480*y^6 + 1121913*y^5 + 1895465*y^4 + 2373371*y^3 + 2088450*y^2 + 1161615*y^1 + 310572)*x^31 + (y^12 + 14*y^11 + 168*y^10 + 1274*y^9 + 7280*y^8 + 31122*y^7 + 101738*y^6 + 253682*y^5 + 477477*y^4 + 660660*y^3 + 638638*y^2 + 388752*y^1 + 113634)*x^29 + (y^11 + 13*y^10 + 143*y^9 + 988*y^8 + 5083*y^7 + 19305*y^6 + 55055*y^5 + 116831*y^4 + 180466*y^3 + 193336*y^2 + 129844*y^1 + 41835)*x^27 + (y^10 + 12*y^9 + 120*y^8 + 748*y^7 + 3421*y^6 + 11352*y^5 + 27599*y^4 + 48180*y^3 + 57816*y^2 + 43252*y^1 + 15511)*x^25 + (y^9 + 11*y^8 + 99*y^7 + 550*y^6 + 2200*y^5 + 6237*y^4 + 12507*y^3 + 17028*y^2 + 14355*y^1 + 5798)*x^23 + (y^8 + 10*y^7 + 80*y^6 + 390*y^5 + 1335*y^4 + 3132*y^3 + 4920*y^2 + 4740*y^1 + 2188)*x^21 + (y^7 + 9*y^6 + 63*y^5 + 264*y^4 + 750*y^3 + 1386*y^2 + 1554*y^1 + 835)*x^19 + (y^6 + 8*y^5 + 48*y^4 + 168*y^3 + 378*y^2 + 504*y^1 + 323)*x^17 + (y^5 + 7*y^4 + 35*y^3 + 98*y^2 + 161*y^1 + 127)*x^15 + (y^4 + 6*y^3 + 24*y^2 + 50*y^1 + 51)*x^13 + (y^3 + 5*y^2 + 15*y^1 + 21)*x^11 + (y^2 + 4*y^1 + 9)*x^9 + (y^1 + 4)*x^7 + (2)*x^5 + (1)*x^3 + (1)*x^1 ']]
 
+x_len = 33
 size = len(groups)
 
 for i in range(size):
     x_series, xy_series = combo_equations_to_series(groups[i][1:], [(x_len + 1) // 2])
+    # print(show_global(x_series))
+    # print(show_global(xy_series))
     assert show_global(x_series) == correct_answers[i][0]
     assert show_global(xy_series) == correct_answers[i][1]
 print('equations2series PASSED!\n')
+
+# x_len = 33
+# for i in range(size):
+#     x_series = compute_sequence(groups[i][1:], (x_len + 1) // 2)
+#     assert show_local(x_series, loc='x') == correct_answers[i][0]
+#     print(show_local(x_series, loc='x'))
+print('compute_sequence PASSED!\n')
