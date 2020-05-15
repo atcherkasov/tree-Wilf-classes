@@ -1,26 +1,34 @@
+import os
+import sys
+sys.path.append(os.getcwd())
+
 from source.get_series import beautiful_time
 from source.sequence_evaluation import compute_sequence
 from source.poly_func.my_poly_functions import show_local
 from source.parsers import parser
 from source import parallel_setup
-import os
 import time
 
 
 if __name__ == '__main__':
+    args = sys.argv
 
-    # чтение конфига
-    dots = '../'
+    dots = ''
 
-    fin = open(dots + 'configs/Avoidance.txt', 'r')
-    all_strings = fin.readlines()
-    leaf_number = int(all_strings[11].split()[0])
-    x_len = int(all_strings[12].split()[0])
-    start_fold = int(all_strings[13].split()[0])
-    end_fold = int(all_strings[14].split()[0])
-    handle = all_strings[15].split()[0]
+    try:
+        leaf_number = int(args[1])
+        x_len = int(args[2])
+        start_fold = int(args[3])
+        end_fold = int(args[4])
+        free_proc = int(args[5])
+        handle = args[6]
+    except:
+        print('You hae got un correct list of args')
+        print('copy this example: ')
+        print('\n\tpython3 source/Avoidance.py 9 65 0 100000 0 Sasha\n')
+        exit(0)
 
-    parallel_setup.init()
+    parallel_setup.init(free_proc)
 
     start = time.time()
     groups, leaf_number = parser(dots + 'input_files/equations_short_' + str(leaf_number) + '.txt')
