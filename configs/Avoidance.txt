@@ -7,12 +7,18 @@ EXAMPLE:
 0        start fold
 100000   end fold
 bochonok your handle
+True     everything okay?
 '''
 
 9 leaves number
-33 x_len
-40 start fold
+33  x_len
+40    tart fold
 1000 end fold
 chat your handle
 
-2) Run this file with python 3: source/Avoidance.py
+
+2) if you you run in pycharm you have just run this file with python 3: source/Avoidance.py
+
+   if you you run from terminal from 'Kursovaya_2_kurs' directory change it in special field
+   and also please change in source/Avoidance.py 12 line: <dots = '../'> --> <dots = ''>
+   and then run source/Avoidance.py
