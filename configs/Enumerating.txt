@@ -1,0 +1,18 @@
+1) Please, leave more than zero space between num and word
+
+EXAMPLE:
+'''
+10       leaves number
+151      x_len
+0        start fold
+100000   end fold
+bochonok your handle
+'''
+
+9 leaves number
+33 x_len
+40 start fold
+1000 end fold
+chat your handle
+
+2) Run this file with python 3: source/Enumerating.py
