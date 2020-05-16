@@ -25,7 +25,7 @@ if __name__ == '__main__':
     except:
         print('You hae got un correct list of args')
         print('copy this example: ')
-        print('\n\tpython3 source/Avoidance.py 9 65 0 100000 0 Sasha\n')
+        print('\n\tpython3 source/Avoidance.py 9 65 0 1000 0 Sasha\n')
         exit(0)
 
     parallel_setup.init(free_proc)
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     except:
         pass
 
-    log_dir_path = dots + 'loges/En_' + str(leaf_number) + '_' + str(x_len)
+    log_dir_path = dots + 'loges/Av_' + str(leaf_number) + '_' + str(x_len)
     try:
         os.mkdir(log_dir_path)
     except:
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     loges_file = open(log_dir_path + '/' + handle + '_from_' + str(min(start_fold, end_fold)) + '_to_' + str(max(start_fold, end_fold)) + '.txt', 'w')
 
-    part = 5.0
+    part = 2.5
     part_time = part
 
     already_counted_folds = set([int(file_name[:file_name.find('_')]) for file_name in os.listdir(out_dir_path)])
@@ -79,7 +79,8 @@ if __name__ == '__main__':
 
             part_time += part
         else:
-            print(percent, '%')
+            pass
+            # print(percent, '%')
         file.close()
 
     print(' ВЕСЬ ПРОЦЕСС ЗАНЯЛ: ' + beautiful_time(time.time() - start),
