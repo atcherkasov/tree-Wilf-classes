@@ -56,6 +56,7 @@ if __name__ == '__main__':
         end_fold = int(args[4])
         free_proc = int(args[5])
         handle = args[6]
+        FREQUENCY_FLAG = 't'
         if len(args) > 7:
             FREQUENCY_FLAG = args[7]
     except:
