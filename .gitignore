@@ -6,6 +6,6 @@ docs/*.txt
 experiments/.ipynb_checkpoints/
 .vs/
 rubbish_files/
-friends_reduce/ds_part.txt
+friends_reduce/
 .DS_Store
 source/.DS_Store
