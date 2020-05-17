@@ -95,8 +95,6 @@ if __name__ == '__main__':
     except:
         pass
 
-    loges_file = open(log_dir_path + '/' + handle + '_from_' + str(min(start_fold, end_fold)) + '_to_' + str(max(start_fold, end_fold)) + '.txt', 'w')
-
     part = 2.5
     part_time = part
 
@@ -110,6 +108,8 @@ if __name__ == '__main__':
 
     parallel_setup.pool.map(big_process, indexes)
 
+    loges_file = open(local_log + '/' + handle + '_from_' + str(min(start_fold, end_fold))
+                      + '_to_' + str(max(start_fold, end_fold)) + '.txt', 'w')
     print(' ВЕСЬ ПРОЦЕСС ЗАНЯЛ: ' + beautiful_time(time.time() - start),
           file=loges_file)
     print('заняло ' + beautiful_time(time.time() - start))
