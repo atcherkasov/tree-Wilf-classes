@@ -9,6 +9,41 @@ from source.parsers import parser
 from source import parallel_setup
 import time
 
+FREQUENCY_FLAG = 't'
+
+def big_process(i: int):
+    global part_time, part, indexes
+
+    lit_start = time.process_time()
+
+    x_series = compute_sequence(groups[i][1:], (x_len + 1) // 2)
+    file = open(out_dir_path + '/' + str(i) + '_fold_' + handle + '.txt', 'w')
+    print(time.process_time() - lit_start, file=file)
+    print(groups[i][0][:-1], file=file)
+    print(show_local(x_series, loc='x'), file=file)
+    file.close()
+
+    already_counted_folds = set([int(file_name[:file_name.find('_')])
+                                 for file_name in os.listdir(out_dir_path)])
+    local_ind = len(already_counted_folds.intersection(indexes))
+
+    percent = round(local_ind / float(len(indexes)) * 100, 1)
+    already_counted_logs = set([float(file_name[:file_name.find('_') - 1])
+                                for file_name in os.listdir(local_log)])
+
+    if percent >= part_time and len(already_counted_logs) < percent / 5:
+        log_file = open(local_log + '/' + str(percent) + '%_' + handle + '.txt', 'w')
+        print('посчитанно', str(percent) + '%. За',
+              beautiful_time(time.time() - start), file=log_file)
+        log_file.close()
+        print('посчитанно', str(percent) + '%. За',
+              beautiful_time(time.time() - start))
+
+        part_time += part
+    else:
+        if FREQUENCY_FLAG == 't':
+            print(percent, '%')
+
 
 if __name__ == '__main__':
     args = sys.argv
@@ -30,8 +65,6 @@ if __name__ == '__main__':
         print('copy this example: ')
         print('\n\tpython3 source/Avoidance.py 9 65 0 1000 0 Sasha\n')
         exit(0)
-
-    parallel_setup.init(free_proc)
 
     start = time.time()
     groups, leaf_number = parser(dots + 'input_files/equations_short_' + str(leaf_number) + '.txt')
@@ -55,37 +88,28 @@ if __name__ == '__main__':
     except:
         pass
 
-    loges_file = open(log_dir_path + '/' + handle + '_from_' + str(min(start_fold, end_fold)) + '_to_' + str(max(start_fold, end_fold)) + '.txt', 'w')
+    local_log = log_dir_path + '/' + handle + '_from_' + str(min(start_fold, end_fold)) \
+                + '_to_' + str(max(start_fold, end_fold))
+    try:
+        os.mkdir(local_log)
+    except:
+        pass
 
     part = 2.5
     part_time = part
 
-    already_counted_folds = set([int(file_name[:file_name.find('_')]) for file_name in os.listdir(out_dir_path)])
+    already_counted_folds = set([int(file_name[:file_name.find('_')])
+                                 for file_name in os.listdir(out_dir_path)])
     indexes = set(range(start_fold, end_fold, change)) - already_counted_folds
     indexes = sorted(list(indexes))
     local_ind = -1
-    for i in indexes:
-        local_ind += 1
-        lit_start = time.time()
-        x_series = compute_sequence(groups[i][1:], (x_len + 1) // 2)
-        file = open(out_dir_path + '/' + str(i) + '_fold_' + handle + '.txt', 'w')
-        print(time.time() - lit_start, file=file)
-        print(groups[i][0][:-1], file=file)
-        print(show_local(x_series, loc='x'), file=file)
 
-        percent = round(local_ind / float(len(indexes)) * 100, 1)
-        if percent >= part_time:
-            print('посчитанно', str(percent) + '%. За',
-                  beautiful_time(time.time() - start), file=loges_file)
-            print('посчитанно', str(percent) + '%. За',
-                  beautiful_time(time.time() - start))
+    parallel_setup.init(free_proc, part_time, part, indexes, FREQUENCY_FLAG, start)
 
-            part_time += part
-        else:
-            if frequency_flag == 't':
-                print(percent, '%')
-        file.close()
+    parallel_setup.pool.map(big_process, indexes)
 
+    loges_file = open(local_log + '/' + handle + '_from_' + str(min(start_fold, end_fold))
+                      + '_to_' + str(max(start_fold, end_fold)) + '.txt', 'w')
     print(' ВЕСЬ ПРОЦЕСС ЗАНЯЛ: ' + beautiful_time(time.time() - start),
           file=loges_file)
     print('заняло ' + beautiful_time(time.time() - start))

@@ -24,7 +24,8 @@ def compute_sequence(equations: list, n: int):
                               variable[equations[j - 1][2]],
                               variable[equations[j - 1][3]],
                               variable[equations[j - 1][4]], n])
-        result = parallel_setup.pool.map(x_equation, arguments)
+        # result = parallel_setup.pool.map(x_equation, arguments)
+        result = [x_equation(args) for args in arguments]
 
         for j in range(len(variable) - 1):
             variable[j + 1] = result[j]
