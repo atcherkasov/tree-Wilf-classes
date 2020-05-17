@@ -25,8 +25,8 @@ def equations2series(equations: list, n: int, xy_equation=True):
                               variable[equations[j - 1][2]],
                               variable[equations[j - 1][3]],
                               variable[equations[j - 1][4]], n])
-        result = parallel_setup.pool.map(make_equation, arguments)
-
+        # result = parallel_setup.pool.map(make_equation, arguments)
+        result = [make_equation(args) for args in arguments]
         for j in range(len(variable) - 1):
             variable[j + 1] = result[j]
 
