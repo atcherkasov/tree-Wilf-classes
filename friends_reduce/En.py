@@ -24,6 +24,9 @@ try:
     end_fold = int(args[4])
     free_proc = int(args[5])
     handle = args[6]
+    frequency_flag = 'f'
+    if len(args) > 7:
+        frequency_flag = args[7]
 except:
     print('You hae got un correct list of args')
     print('copy this example: ')

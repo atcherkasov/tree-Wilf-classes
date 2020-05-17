@@ -22,6 +22,9 @@ if __name__ == '__main__':
         end_fold = int(args[4])
         free_proc = int(args[5])
         handle = args[6]
+        frequency_flag = 't'
+        if len(args) > 7:
+            frequency_flag = args[7]
     except:
         print('You hae got un correct list of args')
         print('copy this example: ')
@@ -79,8 +82,8 @@ if __name__ == '__main__':
 
             part_time += part
         else:
-            pass
-            # print(percent, '%')
+            if frequency_flag == 't':
+                print(percent, '%')
         file.close()
 
     print(' ВЕСЬ ПРОЦЕСС ЗАНЯЛ: ' + beautiful_time(time.time() - start),
