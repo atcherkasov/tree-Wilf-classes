@@ -5,6 +5,7 @@ venv/
 docs/*.txt
 experiments/.ipynb_checkpoints/
 .vs/
-output_files/series_9_21.txt
 rubbish_files/
 friends_reduce/ds_part.txt
+.DS_Store
+source/.DS_Store
