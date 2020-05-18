@@ -6,7 +6,7 @@
 От Вас требуется лишь запустить один из выше указанных процессов с указанными 
 ниже аргументами командной строки.
 
-Для запуска этих процессов потребуется python 3 и ещё нужно будет установить сторонние пакеты,
+Для запуска этих процессов потребуется pypy 3 и ещё нужно будет установить сторонние пакеты,
 которые лежат тут `source/requirements.txt`. Для этого Вам просто нужно будет выполнить 
 эту команду `pip install -r source/requirements.txt`.
 
@@ -24,22 +24,22 @@
 
 ## Примеры вызовов:
 
-`Kursovavaya_2_kurs: python3 source/Enumerating.py 10 151 0 10000 0 Sasha`
+`Kursovavaya_2_kurs: pypy3 friends_reduce/En.py 10 151 0 10000 0 Sasha`
 
-`Kursovavaya_2_kurs: python3 source/Avoidance.py 9 151 10 20 1 Petya`
+`Kursovavaya_2_kurs: pypy3 friends_reduce/Av.py 9 151 10 20 1 Petya`
 
-`Kursovavaya_2_kurs: python3 source/Avoidance.py 8 151 100 60 0 Vasya`
+`Kursovavaya_2_kurs: pypy3 friends_reduce/Av.py 8 151 100 60 0 Vasya`
 Ничего страшного если `start_fold` > `end_fold`. 
 Программа будет просто вычислять фолды на отрезке от большего к меньшему.
 
 ## Что делать в конце?
 
 В конце зафиксируйте состояния: 
-* одной папачки `output_files/Av_<leave_number>_<x_len>` или `output_files/En_<leave_number>_<x_len>`
+* одной папки `output_files/Av_<leave_number>_<x_len>` или `output_files/En_<leave_number>_<x_len>`
 в зависимости от того, `source/Avoidance.py` Вы высчитовали или `source/Enumerating.py` (например `
 git add output_files/Av_9_151`)
 * одного файлика-логгера `loges/Av_<leave_number>_<x_len>` или `loges/En_<leave_number>_<x_len>`
-в зависимости от того, `source/Avoidance.py` Вы высчитовали или `source/Enumerating.py` (например `
+в зависимости от того, `friends_reduce/Av.py` Вы высчитовали или `friends_reduce/En.py` (например `
 git add loges/Av_9_151`)
 
 Почти всё готово, осталось сделать:
