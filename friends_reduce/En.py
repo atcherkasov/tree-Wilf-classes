@@ -94,7 +94,7 @@ class Batya:
 
 if __name__ == '__main__':
     if WEBHOOK_URL == '':
-        cmd = "python3 " + TASK_SCRIPT + " " + " ".join(list(map(str, TASK_ARGUMENTS)))
+        cmd = "pypy3 " + TASK_SCRIPT + " " + " ".join(list(map(str, TASK_ARGUMENTS)))
         os.system(cmd)
     else:
         batya = Batya()
