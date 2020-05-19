@@ -4,3 +4,5 @@
 В дальнейшем это будет испольнозаваться уже другими скриптами не из этого репозитория для проверки гипотезы Роуланда.
 
 ## Если хотите помочь мне с параллельным вычислением рядов, то Вы можете прочитать подробную инструкцию в `friend_reduce/QUICK_START.md` и стать одним из моих `friends` :)
+
+https://www.google.com/url?sa=i&url=https%3A%2F%2Flenta.ru%2Fnews%2F2015%2F06%2F04%2Fteletubbies%2F&psig=AOvVaw1D1AeJl0zEPGbeVAUqn7RD&ust=1590008145493000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMjS94jowOkCFQAAAAAdAAAAABAD
