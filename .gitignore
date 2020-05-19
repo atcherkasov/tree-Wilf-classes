@@ -8,3 +8,4 @@ rubbish_files/
 friends_reduce/ds_webhook.txt
 .DS_Store
 source/.DS_Store
+local_data/
