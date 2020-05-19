@@ -33,7 +33,7 @@ except:
     print('\n\tpython3 friends_reduce/Av.py 9 65 0 1000 0 Sasha\n')
     exit(0)
 
-TASK_ARGUMENTS = leaf_number, x_len, start_fold, end_fold, free_proc, handle, frequency_flag
+TASK_ARGUMENTS = leaf_number, x_len, start_fold, end_fold, free_proc, handle
 
 
 class Batya:

@@ -41,7 +41,7 @@ def big_process(i: int):
         part_time += part
     else:
         if FREQUENCY_FLAG == 't':
-            pass # print(percent, '%')
+            print(percent, '%')
 
 
 if __name__ == '__main__':
