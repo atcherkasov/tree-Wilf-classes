@@ -1,4 +1,8 @@
 def show_local(arr: list, loc='y') -> list:
+    """
+    Преобразует заданный многочлен от одной переменной в строку,
+    где в качестве переменной указывает переданную ей в аргументы строку
+    """
     step_y = len(arr) - 1
     ans = "("
     for j in range(len(arr) - 1):
@@ -16,6 +20,14 @@ def show_local(arr: list, loc='y') -> list:
 
 
 def show_global(arr: list, glob='x', loc='y') -> list:
+    """
+    Преобразует заданный многочлен от одной переменной в строку,
+    где в качестве переменной указывает переданную ей в аргументы строку
+    :param arr:
+    :param glob:
+    :param loc:
+    :return:
+    """
     step_x = len(arr) - 1
     ans = ""
     for i in range(len(arr) - 1):
@@ -31,6 +43,13 @@ def show_global(arr: list, glob='x', loc='y') -> list:
 
 
 def add_local(a: list, b: list) -> list:
+    """
+    Преобразует заданный многочлен от двух переменных в строку,
+    где в качестве переменной указывает переданную ей в аргументы строку
+    :param a:
+    :param b:
+    :return:
+    """
     if len(a) < len(b):
         a, b = b, a
     ans = a[::]
