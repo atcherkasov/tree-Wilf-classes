@@ -2,14 +2,14 @@ import os
 import sys
 sys.path.append(os.getcwd())
 
-from discord import Webhook, RequestsWebhookAdapter
+
 from threading import Thread, Timer
 from subprocess import Popen, PIPE
 from typing import IO
 from typing import *
 
 # Хук для логгинга в дискорд
-ds_file = open('friends_reduce/ds_part.txt', 'r')
+ds_file = open('friends_reduce/ds_webhook.txt', 'r')
 WEBHOOK_URL = ds_file.readline()
 # Скрипт таски. PYTHONPATH автоматически прокидывается равным CWD
 TASK_SCRIPT = 'source/Avoidance.py'
@@ -30,7 +30,7 @@ try:
 except:
     print('You hae got un correct list of args')
     print('copy this example: ')
-    print('\n\tpython3 friends_reduce/Av.py 9 65 0 1000 0 Sasha\n')
+    print('\n\tpypy3 friends_reduce/Av.py 9 65 0 1000 0 Sasha\n')
     exit(0)
 
 TASK_ARGUMENTS = leaf_number, x_len, start_fold, end_fold, free_proc, handle, frequency_flag
@@ -97,5 +97,6 @@ if __name__ == '__main__':
         cmd = "pypy3 " + TASK_SCRIPT + " " + " ".join(list(map(str, TASK_ARGUMENTS)))
         os.system(cmd)
     else:
+        from discord import Webhook, RequestsWebhookAdapter
         batya = Batya()
         batya.run()

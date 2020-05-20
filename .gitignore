@@ -2,10 +2,10 @@
 __pycache__/
 venv/
 .idea/
-docs/*.txt
 experiments/.ipynb_checkpoints/
 .vs/
 rubbish_files/
-friends_reduce/*.txt
+friends_reduce/ds_webhook.txt
 .DS_Store
 source/.DS_Store
+local_data/
