@@ -66,7 +66,7 @@ namespace GetEquation
 
         static void Main(string[] args)
         {
-            Console.Write("Введите айайа n: ");
+            Console.Write("Введите n: ");
 
             int n;
             int.TryParse(Console.ReadLine(), out n);
@@ -92,7 +92,7 @@ namespace GetEquation
             }
 
 
-            using (StreamWriter fs = new StreamWriter("../../../../../../degug_" + n + ".txt", false, System.Text.Encoding.Default))
+            using (StreamWriter fs = new StreamWriter("../../../input_files/equations_short_" + n + ".txt", false, System.Text.Encoding.Default))
             {
                 int cnt = 0;
                 for (int j = 0; j < AlreadyCounted.Length; j++)
