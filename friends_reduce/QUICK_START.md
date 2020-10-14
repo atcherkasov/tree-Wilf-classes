@@ -53,6 +53,7 @@ git add loges/Av_9_151`)
 Для связи пишите в: 
 * telegram: `@chat_22`
 * discord: `CHAT#1145`
+* email: `chatakamord@yandex.ru`
 
 ## Уголок для `friends` которые хотят подключить логирование в локальном discord канале 
 
